@@ -1,5 +1,5 @@
-title:            Blog Title
-description:      Describe your website here.
+title:            JongBeomKim's blog
+description:      JongBeomKim's Research Blog
 
 # put your disqus here
 disqus_shortname:
@@ -20,10 +20,8 @@ url: https://jongbeomkimboeing.github.io/
 menu:
   - title: 'Home'
     url: '/'
-  - title: 'Fork'
-    url: '/fork'
-  - title: 'Install'
-    url: '/install'
+  - title: 'Paper'
+    url: '/paper'
   - title: 'Tags'
     url: '/tags'
   - title: 'Categories'
@@ -36,14 +34,16 @@ menu:
         url: '/intro/code-highlighting-post/'
       - title: 'Sample Post'
         url: '/intro/sample-post/'
+   - title: 'About me'
+    url: '/aboutme'
 
 # Owner/author information
 owner:
-  name:           Your name
+  name:           JongBeomKim
   site:          https://jongbeomkimboeing.github.io/
   avatar:         images/avatar.jpg
   bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
-  email:          you@email.com
+  email:          harryjb@naver.com
   # Twitter nick for use in Twitter cards and follow button.
   twitter: aron_bordin # if no twitter in this config, the twitter follow button will be removed
   # GitHub nick for use in follow button in author block.
@@ -56,11 +56,11 @@ twitter:
 # Social networking links used in author block underneath posts. Update and remove as you like.
 social:
   - title: "github"
-    url: "https://github.com/aron-bordin"
+    url: "https://github.com/JongBeomKimboeing/"
   - title: "linkedin"
-    url: "https://br.linkedin.com/in/aronbordin"
+    url: ""
   - title: "youtube"
-    url: "https://www.youtube.com/channel/UCfnSek-9HPWOx5e2pH7VFgg"
+    url: ""
 
 # Background image to be tiled on all pages
 background:
