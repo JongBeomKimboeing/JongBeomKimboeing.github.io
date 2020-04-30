@@ -21,6 +21,8 @@ url: https://jongbeomkimboeing.github.io/
 menu:
   - title: 'Home'
     url: '/'
+  - title: 'GitHub'
+    url: 'https://github.com/JongBeomKimboeing/'
   - title: 'Tags'
     url: '/tags'
   - title: 'Categories'
