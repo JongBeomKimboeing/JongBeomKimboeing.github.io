@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: About me
 share: true
 ---
 
@@ -8,7 +8,7 @@ share: true
 
 Neo-HPSTR Jekyll is a responsive and modern blog template.
 
-# Live Demo
+# Jong Beom Kim
 
 You can see it running [here](http://blog.rhesoft.com/) and [here](http://aronbordin.com/neo-hpstr-jekyll-theme/).
 
