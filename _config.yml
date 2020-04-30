@@ -36,11 +36,11 @@ menu:
 
 # Owner/author information
 owner:
-  name:           Your name
+  name:          Jong Beom Kim
   site:          https://jongbeomkimboeing.github.io/
   avatar:         images/avatar.jpg
-  bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
-  email:          you@email.com
+  bio:            "Catholic University of Korea"
+  email:          harryjb@naver.com
   # Twitter nick for use in Twitter cards and follow button.
   twitter: aron_bordin # if no twitter in this config, the twitter follow button will be removed
   # GitHub nick for use in follow button in author block.
