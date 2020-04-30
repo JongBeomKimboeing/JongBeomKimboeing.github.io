@@ -4,7 +4,7 @@ title: About
 share: true
 ---
 
-# Neo-HPSTR Jekyll Theme
+# About me
 
 Neo-HPSTR Jekyll is a responsive and modern blog template.
 
