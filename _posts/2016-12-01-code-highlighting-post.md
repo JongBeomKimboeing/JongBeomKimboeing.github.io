@@ -2,69 +2,42 @@
 layout: post
 title: Syntax Highlighting Post
 description: "Demo post displaying the various ways of highlighting code in Markdown."
-modified: 2016-12-01
-tags: [sample post, code, highlighting]
-categories: [intro]
+modified: 2020-05-02
+tags: [김성훈,DL]
+categories: [김성훈DL]
 ---
+'''python
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+tf.enable_eager_execution()
 
-Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.[^1]
+#data
+x_data = [1,2,3,4,5]
+y_data = [1,2,3,4,5]
 
-[^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
+#w,b initialize
+w = tf.Variable(2.9)
+b = tf.Variable(0.5)
+#tf.reduce_mean(배열):차원을 줄여 평균을 계산 ex)v=[1.,2.,3.,4.] -> 결과:2.5
+#tf.square(값):제곱
 
-### Rouge Code Blocks
+learning_rate = 0.01 #learning rate 초기화
 
-To modify styling and highlight colors edit `/_sass/_rouge.scss`.
-
-{% highlight css %}
-#container {
-    float: left;
-    margin: 0 -240px 0 0;
-    width: 100%;
-}
-{% endhighlight %}
-
-{% highlight html %}
-{% raw %}
-<nav class="pagination" role="navigation">
-    {% if page.previous %}
-        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-    {% endif %}
-    {% if page.next %}
-        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-    {% endif %}
-</nav><!-- /.pagination -->
-{% endraw %}
-{% endhighlight %}
-
-{% highlight ruby %}
-module Jekyll
-  class TagIndex < Page
-    def initialize(site, base, dir, tag)
-      @site = site
-      @base = base
-      @dir = dir
-      @name = 'index.html'
-      self.process(@name)
-      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
-      self.data['tag'] = tag
-      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '
-      tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'
-      self.data['title'] = "#{tag_title_prefix}#{tag}"
-      self.data['description'] = "An archive of posts tagged #{tag}."
-    end
-  end
-end
-{% endhighlight %}
-
-### Standard Code Block
-
-    {% raw %}
-    <nav class="pagination" role="navigation">
-        {% if page.previous %}
-            <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-        {% endif %}
-        {% if page.next %}
-            <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-        {% endif %}
-    </nav><!-- /.pagination -->
-    {% endraw %}
+for i in range(1001):
+    #gradient descent부분
+    with tf.GradientTape() as tape:
+        #. tf.GradientTape는 컨텍스트(context) 안에서 실행된 모든 연산을 테이프(tape)에 "기록"합니다.
+        # 그 다음 텐서플로는 후진 방식 자동 미분(reverse mode differentiation)을 사용해
+        # 테이프에 "기록된" 연산의 그래디언트를 계산합니다.
+        hypothesis = w * x_data + b
+        cost = tf.reduce_mean(tf.square(hypothesis - y_data))
+        # tf.reduce_mean(배열):차원을 줄여 평균을 계산 ex)v=[1.,2.,3.,4.] -> 결과:2.5
+        # tf.square(값):제곱
+    w_grad, b_grad = tape.gradient(cost, [w,b])
+    w.assign_sub(learning_rate*w_grad) #assign_sub는 -=와 같음
+    b.assign_sub(learning_rate*b_grad)
+    if i%100 ==0:
+        print("%d | %f | %f | %f |" %(i, w.numpy(), b.numpy(), cost))
+        #텐서는 .numpy() 메서드(method)를 호출하여 넘파이 배열로 변환할 수 있다.
+        #.numpy() 메서드는 텐서를 넘파이 배열로 변환합니다.
+'''
