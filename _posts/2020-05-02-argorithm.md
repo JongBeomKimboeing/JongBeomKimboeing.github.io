@@ -6,7 +6,7 @@ modified: 2020-05-02
 tags: [알고리즘,배열]
 categories: [백준문제풀이]
 ---
-#문제가 그나마 쉬워서 그방 풀었다.
+# 문제가 그나마 쉬워서 그방 풀었다.
 ```c
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
