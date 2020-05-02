@@ -6,6 +6,7 @@ modified: 2020-05-02
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
+Linear Regression의 코드이다.
 ```python
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
