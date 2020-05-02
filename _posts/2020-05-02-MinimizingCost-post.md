@@ -7,7 +7,7 @@ tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
 ###pure python을 이용한 Minimizing Cost 코드 
-
+```python
 #cost function with pure python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,3 +31,4 @@ for feed_w in np.linspace(-3,5, num=15):  #feed_w 값을 -3~5를 15구간으로 
 
 plt.plot(fw, cc)
 plt.show()
+```
