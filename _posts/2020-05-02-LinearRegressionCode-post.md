@@ -6,7 +6,7 @@ modified: 2020-05-02
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
-'''
+```python
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 tf.enable_eager_execution()
@@ -40,5 +40,4 @@ for i in range(1001):
         print("%d | %f | %f | %f |" %(i, w.numpy(), b.numpy(), cost))
         #텐서는 .numpy() 메서드(method)를 호출하여 넘파이 배열로 변환할 수 있다.
         #.numpy() 메서드는 텐서를 넘파이 배열로 변환합니다.
-        
-'''
+```
