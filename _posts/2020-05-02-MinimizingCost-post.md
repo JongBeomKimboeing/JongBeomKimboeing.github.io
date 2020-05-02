@@ -6,8 +6,6 @@ modified: 2020-05-02
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
-pure python을 이용한 Minimizing Cost 코드
-=========================================
 
 ```python
 #cost function with pure python
