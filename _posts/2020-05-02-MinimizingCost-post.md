@@ -32,4 +32,4 @@ for feed_w in np.linspace(-3,5, num=15):  #feed_w 값을 -3~5를 15구간으로 
 plt.plot(fw, cc)
 plt.show()
 ```
-![image](https://github.com/JongBeomKimboeing/JongBeomKimboeing.github.io/blob/master/images/MinimizingCost.png)
+![image](/blob/master/images/MinimizingCost.png)
