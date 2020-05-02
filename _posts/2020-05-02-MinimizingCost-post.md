@@ -1,3 +1,13 @@
+---
+layout: post
+title: Minimizing Cost with python
+description: " Minimizing Cost with python code"
+modified: 2020-05-02
+tags: [김성훈,DL]
+categories: [김성훈DL]
+---
+###pure python을 이용한 Minimizing Cost 코드 
+
 #cost function with pure python
 import numpy as np
 import matplotlib.pyplot as plt
