@@ -37,3 +37,4 @@ plt.scatter(w_data, cost_data)
 plt.show()
 
 ```
+![image](/assets/GDCgraph.png)
