@@ -2,7 +2,7 @@
 layout: post
 title: Gradient Descent
 description: "Gradient Descent code"
-modified: 2020-05-02
+modified: 2020-05-04
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
