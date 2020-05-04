@@ -7,6 +7,24 @@ tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
 
+# batch
+=============
+설명
+<br>
+# epoch
+=============
+설명
+<br>
+# iteration
+=============
+설명
+<br>
+# tf.cast(조건)
+=============
+설명
+<br>
+
+
 ```python
 import numpy as np
 import  matplotlib.pyplot as plt
