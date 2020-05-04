@@ -1,3 +1,12 @@
+---
+layout: post
+title: Gradient Descent
+description: "Gradient Descent code"
+modified: 2020-05-02
+tags: [김성훈,DL]
+categories: [김성훈DL]
+---
+
 ```python
 import numpy as np
 import  matplotlib.pyplot as plt
