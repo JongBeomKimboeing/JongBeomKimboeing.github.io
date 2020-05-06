@@ -1,4 +1,35 @@
 # 5월 6일(4문제 1시도)
+## 11778번(피보나치수와 최대공약수)
+문제 미해결(메모리 초과)
+```c
+#include<stdio.h>
+Fivo(long long int n) {
+	if (n == 0) {
+		return 0;
+	}
+	if (n == 1) {
+		return 1;
+	}
+	return Fivo(n - 1) + Fivo(n - 2);
+}
+
+Gcd(long long int a, long long int b) {
+	if (b % a == 0) {
+		return a;
+	}
+	b = a * (b / a) + (b % a);
+	Gcd(b % a, a);
+}
+int main(void) {
+	long long int ain = 0, bin = 0;
+	scanf("%lld %lld", &ain, &bin);
+	ain = Fivo(ain);
+	bin = Fivo(bin);
+	int res = Gcd(ain,bin);
+	//int Gld = (ain / res) * (bin / res) * res;
+	printf("%d", res % 1000000007);	
+}
+```
 ## 113698번(Hawk eyes)
 ```c
 #include<stdio.h>
