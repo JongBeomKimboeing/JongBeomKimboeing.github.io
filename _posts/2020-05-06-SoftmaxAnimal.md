@@ -1,3 +1,12 @@
+---
+layout: post
+title: softmax를 이용하여 동물데이터 분류
+description: "softmax를 이용하여 동물데이터 분류"
+modified: 2020-05-06
+tags: [김성훈,DL]
+categories: [김성훈DL]
+---
+
 ## 아래 코드는 김성훈 강좌를 실습했으나, 계속 애러가 나서 실패한 코드이다.
 ```python
 import tensorflow as tf
