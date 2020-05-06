@@ -1,3 +1,11 @@
+---
+layout: post
+title: Training set과 test set의 구분, 적절한 learning rate
+description: "Training set과 test set의 구분, 적절한 learning rate"
+modified: 2020-05-06
+tags: [김성훈,DL]
+categories: [김성훈DL]
+---
 ```python
 import tensorflow as tf
 
