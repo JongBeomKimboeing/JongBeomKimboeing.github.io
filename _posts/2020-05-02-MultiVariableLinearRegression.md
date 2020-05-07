@@ -37,7 +37,7 @@ for i in range(n_epoch+1):
     w_grad, b_grad = tape.gradient(cost, [w,b]) # cost를 w1,w2,...,wn들의 wieght에 대해서 미분한다.
                                                 # cost를 b1,b2,...,bn들의 bias에 대해서 미분한다.
     w.assign_sub(learning_rate*w_grad) # w1,w2,...,wn개의 weight들을 하나하나 씩 업데이트 시킨다.
-    b.assign_sub(learning_rate*b_grad)# b1,b2,...,bn개의 bias들을 하나하나 씩 업데이트 시킨다.
+    b.assign_sub(learning_rate*b_grad) # b1,b2,...,bn개의 bias들을 하나하나 씩 업데이트 시킨다.
 
     if i%100 == 0:
         print("%d | %f"%(i, cost.numpy()))
