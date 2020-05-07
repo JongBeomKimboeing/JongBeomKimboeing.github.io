@@ -1,3 +1,11 @@
+---
+layout: post
+title: Multivariable linear regression
+description: "Multivariable linear regression"
+modified: 2020-05-02
+tags: [김성훈,DL]
+categories: [김성훈DL]
+---
 ```python
 import tensorflow as tf
 import numpy as np
