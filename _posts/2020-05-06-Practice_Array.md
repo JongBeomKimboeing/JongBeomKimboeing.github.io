@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Gradient Descent Graph
-description: "Showing how gradient descent works"
-modified: 2020-05-02
+title: Practice of the applications of array
+description: "Practice of the applications of array"
+modified: 2020-05-10
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
