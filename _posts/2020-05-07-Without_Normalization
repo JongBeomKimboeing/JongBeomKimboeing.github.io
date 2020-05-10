@@ -1,3 +1,12 @@
+---
+layout: post
+title: Linear Regression Without Normalization
+description: "Linear Regression Without Normalization"
+modified: 2020-05-07
+tags: [김성훈,DL]
+categories: [김성훈DL]
+---
+
 ```python
 #데이터를 normalization(정규화) 하지 않은 경우
 #loss가 발산해 버린다.
