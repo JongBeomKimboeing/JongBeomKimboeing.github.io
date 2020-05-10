@@ -1,11 +1,12 @@
 ---
 layout: post
-title: Gradient Descent Graph
-description: "Showing how gradient descent works"
+title: Mnist with softmax
+description: " Mnist with softmax"
 modified: 2020-05-02
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
+# Softmax 단일 계층을 이용하여 mnist를 분류했다.
 ```python
 import tensorflow as tf
 import matplotlib.pyplot as plt
