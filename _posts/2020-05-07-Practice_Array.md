@@ -2,7 +2,7 @@
 layout: post
 title: Practice of the applications of array
 description: "Practice of the applications of array"
-modified: 2020-05-10
+modified: 2020-05-07
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
