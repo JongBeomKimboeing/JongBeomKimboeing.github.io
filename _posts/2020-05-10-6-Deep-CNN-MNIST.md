@@ -101,4 +101,6 @@ accuracy 0.9883
 # 고찰
 CNN layer를 3층, FC layer를 3층으로 구성하여 모델을 만들었다.<br>
 여기서는 Xavier initializer와 Dropout regularization을 추가시켰다.<br>
-그 결과 accuracy의 향상과 overfitting 감소를 관찰할 수 있었다.
+그 결과 accuracy의 향상과 overfitting 감소를 관찰할 수 있었다.<br>
+다음 실습에서는 Ensemble학습을 도입하여 accuracy를 더욱 높혀볼 예정이다.<br>
+(참고로, ensemble학습은 김성훈 강좌에 tf2로 변환한 코드가 없어 직접 변환했다.)
