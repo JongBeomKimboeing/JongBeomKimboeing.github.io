@@ -6,7 +6,7 @@ modified: 2020-05-10
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
-# learning rate을 바꾸어 전 log/fit과 비교 (learning rate을 다르게 설정)
+# learning rate을 바꾸어 전 log/fit과 비교<br>(learning rate을 다르게 설정)
 ```python
 import tensorflow as tf
 import os
