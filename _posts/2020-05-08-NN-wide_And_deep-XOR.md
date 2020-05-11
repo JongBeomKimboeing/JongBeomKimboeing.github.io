@@ -31,7 +31,7 @@ prediction = tf.model.predict(x_data)
 print("prediction: \n",prediction)
 ```
 예측결과<br>
--> 예측 결과가 더 극대화 돼서 나타남.
+->단일계층보다 예측 결과가 더 극대화 돼서 나타남.
 ```python
 prediction: 
  [[2.2947788e-06]
