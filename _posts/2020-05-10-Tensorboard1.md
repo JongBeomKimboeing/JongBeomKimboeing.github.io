@@ -6,7 +6,7 @@ modified: 2020-05-10
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
-# learning rate을 바꾸어 전 log/fit과 비교
+# learning rate을 바꾸어 전 log/fit과 비교 (learning rate을 다르게 설정)
 ```python
 import tensorflow as tf
 import os
@@ -17,7 +17,7 @@ import time
 import datetime
 
 rand.seed(777)
-learning_rate = 0.01
+learning_rate = 0.1 #fit과 learning rate을 다르게 설정함.
 batch_size = 100
 training_epoch = 15
 nb_classes = 10
@@ -41,7 +41,7 @@ tf.model.add(tf.keras.layers.Dense(units=2000, activation='relu'))
 tf.model.add(tf.keras.layers.Dense(units=2000, activation='relu'))
 tf.model.add(tf.keras.layers.Dense(units=2000, activation='relu'))
 tf.model.add(tf.keras.layers.Dense(units=nb_classes, activation='softmax'))
-tf.model.compile(loss='categorical_crossentropy', optimizer=tf.keras.optimizers.Adam(0.1), metrics=['accuracy'])
+tf.model.compile(loss='categorical_crossentropy', optimizer=tf.keras.optimizers.Adam(learning_rate), metrics=['accuracy'])
 tf.model.summary()
 ```
 앞의 tensorboard code와 같이 실행 시키면, logs파일에 fit과 fit1파일이 같이 생긴다.<br>
