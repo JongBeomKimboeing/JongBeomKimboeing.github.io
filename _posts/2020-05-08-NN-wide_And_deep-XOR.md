@@ -1,11 +1,12 @@
 ---
 layout: post
-title: Linear Regression Without Normalization
-description: "Linear Regression Without Normalization"
-modified: 2020-05-07
+title: XOR with wide and deep NN
+description: "XOR with wide and deep NN"
+modified: 2020-05-08
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
+# wide하고 deep한 NN을 이용한 XOR문제 해결 
 ```python
 import tensorflow as tf
 import numpy as np
@@ -29,7 +30,8 @@ history = tf.model.fit(x_data,y_data, epochs=5000)
 prediction = tf.model.predict(x_data)
 print("prediction: \n",prediction)
 ```
-예측 결과
+예측결과<br>
+-> 예측 결과가 더 극대화 돼서 나타남.
 ```python
 prediction: 
  [[2.2947788e-06]
