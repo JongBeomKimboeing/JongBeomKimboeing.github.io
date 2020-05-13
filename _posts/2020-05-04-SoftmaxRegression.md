@@ -1,21 +1,13 @@
 ---
 layout: post
-title: Gradient Descent
-description: "Gradient Descent code"
+title: Softmax Regression
+description: "Softmax Regression"
 modified: 2020-05-04
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
-# axis = ?
-## axis=0
-matrix의 x축 방향(행)
-## axis=1
-matrix의 y축 방향(열)
-## axis=2
-matrix의 z축 방향(차원)
-
-
-
+# Softmax Regression
+->Softmax Regression은 다중 클래스 분류에 이용된다. 
 ```python
 import tensorflow as tf
 tf.random.set_seed(777)  # for reproducibility
@@ -62,9 +54,6 @@ print(hypothesis(x_data))
 def cost_fn(X,Y):
     logits = hypothesis(X)
     cost = -tf.reduce_sum(Y * tf.math.log(logits),axis=1)
-    #axis=0: x축 방향으로의 원소들의 합 (행)
-    #axis=1: y축 방향으로의 원소들의 합 (열)
-    #axis=2: z축 방향으로의 원소들의 합
     cost_mean = tf.reduce_mean(cost)
     return cost_mean
 
