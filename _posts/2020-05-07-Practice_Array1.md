@@ -51,7 +51,8 @@ print(a)
 print('\n')
 ```
 # Reshape
-Reshape는 array의 shape을 변환한다.
+Reshape는 array의 shape을 변환한다.<br>
+
 1)
 ```python
 print("Reshape")
