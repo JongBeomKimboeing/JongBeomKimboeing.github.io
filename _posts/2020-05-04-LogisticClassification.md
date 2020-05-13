@@ -1,30 +1,36 @@
 ---
 layout: post
-title: Gradient Descent
-description: "Gradient Descent code"
+title: Logistic Classification
+description: "Logistic Classification"
 modified: 2020-05-04
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
 
 # batch
-설명
-<br>
+-> 데이터 전체를 몇 개로 나누어 학습시킬 것인가?<br>
+ex) 1000개의 데이터를 100개의 batch로 나누어 학습시킨다.<br>
+    -> 한번 학습시킬 때 데이터 1000개를 한꺼번에 넣어 학습시키지 않고 100개를 넣어 나누어 학습시킨다.<br><br>
+    
+cf)batch_size를 이용하는 이유 -> 한번에 많은 양을 학습하면 학습과정이 적어지고 정확도가 높아지나,<br>
+    학습데이터의 메모리가 클 경우 모든 메모리를 한 번 학습하는게 시간이 오래 걸림,<br>
+    그러나 batch_size를 이용하면 학습과정은 좀 많이지고 정확도가 떨어지나,<br>
+    메모리를 분할해서 학습하기 때문에 모든 메모리를 한 번 학습 시키는 데 시간이 적게 걸림.<br><br>
+    
 # epoch
-설명
-<br>
+-> 전체 데이터 한 바퀴를 도는 횟수<br>
+ex) 1000개의 데이터를 학습시키는데, 100개의 batch를 이용한다면, 10번을 거쳐 데이터 전체를 학습하면 1 epoch가 된다.<br><br>
 # iteration
-설명
-<br>
-# tf.cast(조건)
-설명
-<br>
+-> 전체 데이터 한 바퀴를 batch를 이용하여 몇 번을 거쳐 1epoch가 되는가.<br>
+   ex) 1000개의 데이터를 batch_size=10으로 넘겨주면 총 100개의 step(iteration)을 통해 1 epoch (모든 데이터 한 바퀴를 돈다.)를 돈다<br><br>
 
-
+데이터 준비
 ```python
 import numpy as np
 import  matplotlib.pyplot as plt
 import tensorflow as tf
+
+#x_data는 feature, y_data는 label로 이용된다.
 
 x_train = [[1., 2.],
           [2., 3.],
@@ -46,7 +52,9 @@ y_test = [[1.]]
 
 x1 = [x[0] for x in x_train] #x_train의 1열 성분을 추출해낸다.
 x2 = [x[1] for x in x_train] #x_train의 2열 성분을 추출해낸다.
-'''
+```
+그래프 그리기
+```python
 colors = [int(y[0] % 3) for y in y_train]
 plt.scatter(x1,x2, c=colors , marker='^')
 plt.scatter(x_test[0][0],x_test[0][1], c="red")
@@ -55,30 +63,17 @@ plt.xlabel("x1")
 plt.ylabel("x2")
 plt.show()
 
-#그래프 그리기
-'''
-#x_data는 feature, y_data는 label로 이용된다.
-#batchsize는 한번에 학습시킬 size로 정한다.
+```
+**dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train)): x_train과 y_train은 tenosr이다.<br>
+  위 함수는 dataset을 x_train과 y_train tensor들로 초기화 해준며, tensorflow의 tensor형식( tf.Tensor() )으로 변경해준다.<br><br>
+  
+**.batch(len(x_train)): 데이터를 batch_size만큼 나누어 준다<br>
+  아래에서 batch(len(x_train))은 batch(6)과 같기 때문에 그냥 1 step(iteration)을 통해 1 epoch (모든 데이터 한 바퀴를 돈다.)를 돈다.<br>
+  만약 batch(3)으로 놓을 경우 2 step(iteration)을 통해 1 epoch를 돈다.<br>
+```python
 dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train)).batch(len(x_train))
-'''
-tf.data.Dataset.from_tensor_slices((x_train, y_train)).batch(len(x_train))
-:기존에는 placeholder변수에 feed-dict를 통해 학습 시 데이터를 전달했다
-tesorflow2.0 버전부터는 이를 이용하지 않고 입력 파이프라인을 만들어 데이터를 효율적으로 공급한다.
-
-**dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train)): x_train과 y_train은 tenosr이다.
-  위 함수는 dataset을 x_train과 y_train tensor들로 초기화 해준며, tensorflow의 tensor형식( tf.Tensor() )으로 변경해준다.
-  
-**.batch(len(x_train)): 데이터를 batch_size만큼 나누어 준다
-  ex)1000개의 데이터를 batch_size=10으로 넘겨주면 총 100개의 step(iteration)을 통해 1 epoch (모든 데이터 한 바퀴를 돈다.)를 돈다
-  위에서 batch(len(x_train))은 batch(6)과 같기 때문에 그냥 1 step(iteration)을 통해 1 epoch (모든 데이터 한 바퀴를 돈다.)를 돈다.
-  만약 batch(3)으로 놓을 경우 2 step(iteration)을 통해 1 epoch를 돈다.
-  
-  cf)batch_size를 이용하는 이유 -> 한번에 많은 양을 학습하면 학습과정이 적어지고 정확도가 높아지나,
-    학습데이터의 메모리가 클 경우 모든 메모리를 한 번 학습하는게 시간이 오래 걸림, 
-    그러나 batch_size를 이용하면 학습과정은 좀 많이지고 정확도가 떨어지나,
-    메모리를 분할해서 학습하기 때문에 모든 메모리를 한 번 학습 시키는 데 시간이 적게 걸림.
-'''
-
+```
+```python
 #w와 b는 학습을 통해 생성되는 모델에 쓰이는 weight과 bias
 w = tf.Variable(tf.zeros([2,1]), name='weight')
 b = tf.Variable(tf.zeros([1]), name='bias')
