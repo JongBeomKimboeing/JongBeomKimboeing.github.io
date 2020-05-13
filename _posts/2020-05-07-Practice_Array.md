@@ -116,7 +116,7 @@ print('\n')
 ```
 # reduce_mean
 전체의 요소들에 대한 평균값을 구한다.<br>
-<br>
+
 1)
 ```python
 a = tf.reduce_mean([1,2],axis=0) # tensor(배열)의 요소가 정수여서 결과 값으로 정수를 내놓음.
