@@ -81,7 +81,7 @@ print(t[:2], t[3:]) # [:끝] -> t[0] ~ t[끝-1] // [시작:] -> t[시작] ~ t[�
 
 # matmul vs multiply
 1) matmul: matrix의 내적을 계산 -> shape을 내적 가능한 형태로 반드시 맞춰줘야 한다.<br>
-<br>
+
 2) multiply(*): matrix의 element wise 곱 계산<br>
 
 ```python
