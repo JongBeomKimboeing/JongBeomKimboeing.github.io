@@ -12,7 +12,7 @@ import tensorflow as tf
 import numpy as np
 ```
 # Argmax
-Argmax는 가장 큰 값의 위치를 반환한다.<br>
+Argmax는 가장 큰 값의 위치를 반환한다.
 1)
 아래 예시에서<br>
 axis=0 이므로 [0,1,2]과 [2,1,0]를 서로 비교하여 큰 요소의 위치를 출력한다.<br>
@@ -50,7 +50,7 @@ print(a)
 print('\n')
 ```
 # Reshape
-Reshape는 array의 shape을 변환한다.<br>
+Reshape는 array의 shape을 변환한다.
 1)
 ```python
 print("Reshape")
