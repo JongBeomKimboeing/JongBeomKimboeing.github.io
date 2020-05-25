@@ -82,8 +82,8 @@ print("Total validation images:", total_val)
 ### 이미지 원본
 ![image](/assets/KakaoTalk_20200515_185332208_06.jpg)
 ### 변형된 이미지
-![image](/assets/newme_0_62)
-![image](/assets/newme_0_65)
+![image](/assets/newme_0_62.jpg)
+![image](/assets/newme_0_65.jpg)
 
 ### 이미지 불리기 코드 (increase_data.py)
 사실 아래코드는 완벽한 코드는 아니라고 생각한다.<br>
