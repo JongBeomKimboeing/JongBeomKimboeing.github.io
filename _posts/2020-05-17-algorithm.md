@@ -2,7 +2,7 @@
 layout: post
 title: 5월 17일 문제풀이(1966번)
 description: "5월 17일 자료구조 연습"
-modified: 2020-05-15
+modified: 2020-05-17
 tags: [알고리즘,자료구조기초]
 categories: [백준문제풀이]
 ---
