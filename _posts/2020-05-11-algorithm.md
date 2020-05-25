@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 5월 11일 문제풀이
+title: 5월 11일 문제풀이(큐)
 description: "5월 11일 문제풀이"
 modified: 2020-05-11
 tags: [알고리즘,자료구조기초]
