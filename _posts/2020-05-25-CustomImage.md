@@ -216,8 +216,8 @@ print("Total validation images:", total_val)
 train_batch_size = 6756
 test_batch_size = 30
 batch_size = 100
-training_epoch = 1
-learning_rate = 0.0001
+training_epoch = 15
+learning_rate = 0.0001 # 생각보다 learning_rate을 작게 줘야했다.
 IMG_HEIGHT = 150
 IMG_WIDTH = 150
 
@@ -279,7 +279,8 @@ tf.model.add(tf.keras.layers.MaxPool2D(pool_size=(2,2)))
 
 #layer3(Fully connected)
 tf.model.add(tf.keras.layers.Flatten())
-tf.model.add(tf.keras.layers.BatchNormalization())
+tf.model.add(tf.keras.layers.BatchNormalization()) #batch normaliztion이 아주 큰 힘이 됐다
+#batch normaliztion을 이용하지 않았을 때는 학습이 아예 안 돼다가, batch normalization을 사용 한 이후로 accuracy가 많이 증가했다.
 tf.model.add(tf.keras.layers.Dense(units=100,kernel_initializer='lecun_normal',activation='selu'))
 #layer4(Fully connected)
 tf.model.add(tf.keras.layers.BatchNormalization())
@@ -339,5 +340,5 @@ tf.model.save('/Users/harry/PycharmProjects/20200515AI/father_me_model') # 학�
 # weight값을 저장해둔 이유는 바로 찍은 사진을 바로 줘서 추론하도록 해보고 싶었으나, 또 공부할 게 많아서 다음에 해보려고 한다.
 # 참고적으로, weight을 저장해서 전이학습도 가능하다.
 ```
-
+# 결과
 
