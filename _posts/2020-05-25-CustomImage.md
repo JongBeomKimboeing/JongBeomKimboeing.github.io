@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Custom Image(내가 가지고 있는 데이터)를 사용하여 Image 분류하기
+title: Custom Image(내가 가지고 있는 데이터)를  사용하여 Image 분류하기
 description: "Image classification with custom image(my data)"
 modified: 2020-05-25
 tags: [김성훈,DL]
 categories: [김성훈DL]
 ---
 
-# Custom Image를 이용하여 Image Classification 해보기
+# Custom Image를 이용하여      Image Classification 해보기
 항상 MNIST와 같은 만들어진 데이터셋에대한 훈련만 하다보니<br>
 뭔가 나만의 데이터를 이용하여 Image Classification을 해보고 싶었다.<br>
 그렇다고 고양이와 개 분류 같은 사람들이 많이 해 본 분류는 안 해보고 싶어서<br>
