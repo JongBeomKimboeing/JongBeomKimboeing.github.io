@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 5월 23일 문제풀이(10866번)
+title: 5월 23일 문제풀이(덱)
 description: "5월 23일 자료구조 연습"
 modified: 2020-05-23
 tags: [알고리즘,자료구조기초]
