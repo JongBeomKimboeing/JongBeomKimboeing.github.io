@@ -1,4 +1,5 @@
-# 연결리스트 
+# 연결리스트 구현
+
 ```c
 #include<stdio.h>
 #include<stdlib.h>
