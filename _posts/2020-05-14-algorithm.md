@@ -1,3 +1,12 @@
+---
+layout: post
+title: 
+description: "5월 14일 자료구조 연습"
+modified: 2020-05-12
+tags: [알고리즘,자료구조기초]
+categories: [백준문제풀이]
+---
+
 # 이진트리 구현
 ```c
 #include<stdio.h>
