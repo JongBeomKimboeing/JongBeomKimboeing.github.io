@@ -78,6 +78,10 @@ print("Total validation images:", total_val)
 그런데, 실제로 훈련을 시킬 떄 훈련데이터를 6000개로 훈련했다.<br>
 데이터를 변형시켜 훈련데이터를 더 많이 만들어서 80장을 6000장으로 만들 수 있었다.<br>
 
+## 변형된 이미지 예시
+![image](/assets/gDgraph.png)
+![image](/assets/gDgraph.png)
+
 ### 이미지 불리기 코드 (increase_data.py)
 사실 아래코드는 완벽한 코드는 아니라고 생각한다.<br>
 일일이 변형된 이미지를 만들 이미지파일을 선택해 주어야하기 때문이다.<br>
