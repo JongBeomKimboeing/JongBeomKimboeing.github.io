@@ -1,1 +1,199 @@
+---
+layout: post
+title: Cifar10 이미지 분류
+description: "Image classification with Cifar10"
+modified: 2020-05-10
+tags: [김성훈,DL]
+categories: [김성훈DL]
+---
 
+# Cifar10 데이터 이미지 분류
+Cifar10은 MNIST와 같은 이미지 데이터들의 모음이다.
+나는 이 데이터셋을 CNN을 이용하여 분류를 해 보았다.
+
+## Cifar10에 관한 기본적인 설명
+cifar10은 앞에서 말했다시피 MNIST와 같은 데이터 모음이다.
+MNIST는 손글씨 숫자의 데이터를 모아놓은 반면,
+cifar10은  ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+위의 10개의 동물과 물체에 대한 사진들을 모아놨다.
+cifar10은 tensorflow2.0으로
+
+```python
+cifar = tf.keras.datasets.cifar10
+(x_train, y_train), (x_test, y_test) = cifar.load_data()
+```
+위와 같은 코드를 이용하여 간단하게 다운받을 수 있다.
+
+## 내가 만든 model에대한 설명
+### learning rate, training epoch, batch size, drop out rate
+learning rate, training epoch, batch size, drop out rate는 아래와 같이 설정했다.
+```python
+learning_rate = 0.001
+training_epoch = 15
+batch_size = 100
+drop_out_rate = 0.5
+```
+
+### layer
+출력충을 포함해서 총 9층으로 구성했으며,
+CNN layer는 4층, FC layer는 5층으로 구성했다.
+또한 총 4개의 model들을 ensemble 하였다.
+
+```python
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 32, 32, 15)        735       
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 16, 16, 15)        0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 16, 16, 30)        7230      
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 8, 8, 30)          0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 8, 8, 30)          14430     
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 4, 4, 30)          0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 4, 4, 30)          14430     
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 2, 2, 30)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 120)               0         
+_________________________________________________________________
+dense (Dense)                (None, 200)               24200     
+_________________________________________________________________
+dropout (Dropout)            (None, 200)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 200)               40200     
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 200)               0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 100)               20100     
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 100)               0         
+_________________________________________________________________
+dense_3 (Dense)              (None, 100)               10100     
+_________________________________________________________________
+dropout_3 (Dropout)          (None, 100)               0         
+_________________________________________________________________
+dense_4 (Dense)              (None, 10)                1010      
+=================================================================
+Total params: 132,435
+Trainable params: 132,435
+Non-trainable params: 0
+_________________________________________________________________
+Train on 50000 samples
+
+```
+## 전체 
+```python
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+import os
+import time
+import datetime
+
+cifar = tf.keras.datasets.cifar10
+(x_train, y_train), (x_test, y_test) = cifar.load_data()
+
+categories = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+
+x_train = x_train / 225 # 컴퓨터에서 색이 0~255까지의 숫자로 표현 되는데, 이를 0~1사이 값으로 변환 시키기 위해 정규화 시킨다.
+x_test = x_test / 225
+
+y_train = tf.keras.utils.to_categorical(y_train, num_classes= 10)
+y_test = tf.keras.utils.to_categorical(y_test, num_classes= 10)
+
+learning_rate = 0.001
+training_epoch = 15
+batch_size = 100
+drop_out_rate = 0.5
+
+
+tf.model = tf.keras.Sequential()
+#layer1
+tf.model.add(tf.keras.layers.Conv2D(filters=15, kernel_size=(4,4),kernel_initializer= 'glorot_normal', input_shape=(32,32,3), activation='relu', padding="same"))
+tf.model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
+
+#layer2
+tf.model.add(tf.keras.layers.Conv2D(filters=30, kernel_size=(4,4),kernel_initializer= 'glorot_normal', activation='relu', padding="same"))
+tf.model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
+
+#layer3
+tf.model.add(tf.keras.layers.Conv2D(filters=30, kernel_size=(4,4),kernel_initializer= 'glorot_normal', activation='relu', padding="same"))
+tf.model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
+#layer 4
+tf.model.add(tf.keras.layers.Conv2D(filters=30, kernel_size=(4,4),kernel_initializer= 'glorot_normal',activation='relu', padding="same"))
+tf.model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
+
+
+#layer 5
+tf.model.add(tf.keras.layers.Flatten())
+tf.model.add(tf.keras.layers.Dense(units=200, kernel_initializer='glorot_normal', activation='relu'))
+tf.model.add(tf.keras.layers.Dropout(drop_out_rate))
+#layer 6
+
+tf.model.add(tf.keras.layers.Dense(units=200, kernel_initializer='glorot_normal', activation='relu'))
+tf.model.add(tf.keras.layers.Dropout(drop_out_rate))
+#layer 7
+
+tf.model.add(tf.keras.layers.Dense(units=100, kernel_initializer='glorot_normal', activation='relu'))
+tf.model.add(tf.keras.layers.Dropout(drop_out_rate))
+#layer 8
+
+tf.model.add(tf.keras.layers.Dense(units=100, kernel_initializer='glorot_normal', activation='relu'))
+tf.model.add(tf.keras.layers.Dropout(drop_out_rate))
+
+tf.model.add(tf.keras.layers.Dense(units=10, kernel_initializer='glorot_normal', activation='softmax'))
+tf.model.compile(loss='categorical_crossentropy', optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate), metrics=['accuracy'])
+tf.model.summary()
+
+log_dir = os.path.join(".", "logs", "fit1", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq= 1)
+# tf.keras.callbacks.TensorBoard-> log_dir= :log 디렉토리이름,  histogram_freq= 1 : 몇 epoch마다 histogram
+
+# ensemble
+models = []
+num_models = 4
+for m in range(num_models):
+    models.append(tf.model)
+
+predictions = np.zeros([y_test.shape[0], 10])
+
+# 각각의 model로부터 나온 prediction을 합한다.
+
+for m_idx, m in enumerate(models):
+    m.fit(x_train, y_train, batch_size=batch_size, epochs=training_epoch,callbacks=[tensorboard_callback])
+    p = m.predict(x_test)
+    predictions += p
+    evaluation = m.evaluate(x_test, y_test)
+    print(m_idx+1, 'loss: ', evaluation[0])
+    print(m_idx+1, 'accuracy', evaluation[1])
+print("\n")
+
+# ensemble한 결과의 accuracy를 계산한다.
+ensemble_correct_prediction = tf.equal(tf.argmax(predictions, 1), tf.argmax(y_test, 1))
+ensemble_accuracy = tf.reduce_mean(tf.cast(ensemble_correct_prediction, tf.float32))
+print('Ensemble accuracy:', ensemble_accuracy.numpy())
+print("\n")
+
+for x in range(0, 10):
+    random_index = random.randint(0, x_test.shape[0]-1)
+    print("index: ", random_index, "actual y: ", categories[np.argmax(y_test[random_index])], "\t" ,"predicted y: ", categories[np.argmax(predictions[random_index])])
+
+r = random.randint(0, x_test.shape[0]-1)
+print("Label:", categories[np.argmax(y_test[r])])
+print("predicted:", categories[np.argmax(predictions[r])])
+x_test[r] = x_test[r].reshape(32,32,3)
+plt.imshow(x_test[r], interpolation='nearest')
+plt.show()
+```
+
+## 결과
+ loss: 0.6055 - accuracy: 0.8041  --> 마지막 모델의 학습 결과
+  loss: 1.1913 - accuracy: 0.6599  --> 마지막 모델의 추론 결과
+  Ensemble accuracy: 0.7006  --> 4개의 모델을 ensemble하여 추론한 결과
+ 
