@@ -342,3 +342,44 @@ tf.model.save('/Users/harry/PycharmProjects/20200515AI/father_me_model') # 학�
 ```
 # 결과
 
+## 이미지 현황
+```python
+total training father images: 3378
+total training me images: 3378
+total validation father images: 40
+total validation me images: 40
+--
+Total training images: 6756
+Total validation images: 80
+Found 6756 images belonging to 2 classes.
+Found 80 images belonging to 2 classes.
+```
+## 훈련 결과
+```python
+loss: 0.7728 - accuracy: 0.9347
+```
+
+## test accuracy
+어쩌다보니 test accuracy가 100%가 나왔다...
+test 샘플을 너무 적게해서 그런 것 같다.
+
+```python
+1 loss:  0.0
+1 accuracy 1.0
+
+index:  2 actual y:  father predicted y:  father
+index:  6 actual y:  me predicted y:  me
+index:  5 actual y:  father predicted y:  father
+index:  4 actual y:  father predicted y:  father
+index:  0 actual y:  father predicted y:  father
+index:  9 actual y:  father predicted y:  father
+index:  21 actual y:  me predicted y:  me
+index:  0 actual y:  father predicted y:  father
+index:  3 actual y:  me predicted y:  me
+index:  20 actual y:  me predicted y:  me
+Label: me
+predicted: me
+```
+## 새로운 사진을 줘서 prediction하기
+성공적으로 prediction하는 것을 볼 수 있다.
+![image](/assets/testresult.jpg)
