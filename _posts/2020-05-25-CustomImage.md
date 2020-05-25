@@ -13,7 +13,7 @@ categories: [김성훈DL]
 그렇다고 고양이와 개 분류 같은 사람들이 많이 해 본 분류는 안 해보고 싶어서<br>
 나와 아빠의 사진을 분류해보는 재밌는 실습을 해 보았다.
 
-참고자료1: https://www.tensorflow.org/tutorials/images/classification
+참고자료1: https://www.tensorflow.org/tutorials/images/classification<br>
 참고자료2: https://www.tensorflow.org/tutorials/load_data/images
 
 위 tensorflow tutorials에서 많은 참고를 했다.<br>
@@ -21,13 +21,13 @@ categories: [김성훈DL]
 
 ## 파일 만들기
 
-├─image
-│  ├─train
-│  │  ├─father
-│  │  └─me
-│  └─validation
-│      ├─father
-│      └─me
+├─image<br>
+│  ├─train<br>
+│  │  ├─father<br>
+│  │  └─me<br>
+│  └─validation<br>
+│      ├─father<br>
+│      └─me<br>
 
 위와 같은 구조로 pycharm project에 직접 image파일을 만들었다.
 
@@ -83,7 +83,7 @@ print("Total validation images:", total_val)
 일일이 변형된 이미지를 만들 이미지파일을 선택해 주어야하기 때문이다.<br>
 다음에 시간이 되면 더 효율적인 코드를 만들어보고자 한다.<br>
 변형된 이미지는 반드시 training할 이미지파일에 넣어야한다.<br>
-(즉, 변형된 이미지를 test이미지로 설정해주면 안 된다!)
+(즉, 변형된 이미지를 test이미지로 설정해주면 안 된다!)<br>
 추가적으로, 이미지 불리기 코드는 학습하는 코드와 분리시켜 만들었다.
 
 ```python
