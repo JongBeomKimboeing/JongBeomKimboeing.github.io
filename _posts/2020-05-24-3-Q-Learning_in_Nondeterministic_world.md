@@ -69,5 +69,6 @@ plt.show()
 
 ```
 # 실습 결과
-성공한 횟수가 아주 적다.
+성공한 횟수가 아주 적은 것을 확인할 수 있다.<>
+결론: 위 코드로는 Nondetermistic한 환경에는 적용하기 힘들다.
 ![image](/assets/Q-learning_result.png)
