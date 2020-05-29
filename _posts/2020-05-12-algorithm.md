@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 
+title: 5월 12일 자료구조 연습
 description: "5월 12일 자료구조 연습"
 modified: 2020-05-12
 tags: [알고리즘,자료구조기초]
