@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Custom Image(내가 가지고 있는 데이터)를  사용하여 Image 분류하기
-description: "Image classification with custom image(my data)"
+title: Gym 환경 체험하기(Frozen Lake)
+description: "Gym 환경 체험하기(Frozen Lake)"
 modified: 2020-05-15
 tags: [김성훈, Reinforce Learning]
 categories: [김성훈RL]
