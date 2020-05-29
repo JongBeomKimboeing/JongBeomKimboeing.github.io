@@ -70,3 +70,4 @@ plt.show()
 ```
 # 실습 결과
 성공한 횟수가 아주 적다.
+![image](/assets/gDgraph.png)
