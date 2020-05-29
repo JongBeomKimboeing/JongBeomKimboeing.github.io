@@ -1,0 +1,76 @@
+---
+layout: post
+title: Q-Learning
+description: "Q-Learning"
+modified: 2020-05-24
+tags: [김성훈, Reinforce Learning]
+categories: [김성훈RL]
+---
+# Q-Learning
+앞의 dummy Q-learning과 달리,<br>
+e-greedy기법을 이용하여 exploit and exploration을 할 수 있도록 하였다.<br>
+또한, random하게 noise를 만들어서 원래의 action점수와 noise점수를 합하여<br>
+더 다양한 길을 선택할 수 있도록 만들었다.
+```python
+#2
+import gym
+import numpy as np
+import matplotlib.pyplot as plt
+from gym.envs.registration import register
+
+register(
+    id='FrozenLake-v3',
+    entry_point= 'gym.envs.toy_text:FrozenLakeEnv',
+    kwargs={'map_name': '4x4',
+            'is_slippery': False}
+)
+
+env = gym.make('FrozenLake-v3')
+
+Q = np.zeros([env.observation_space.n, env.action_space.n])
+
+dis = 0.99 # discount factor
+num_episode = 2000
+
+rlist = []
+
+for i in range(num_episode):
+    state = env.reset()
+    rAll = 0
+    done = False
+
+    e = 1. / ((i//100)+1)
+
+    while not done:
+    #e-greedy 기법---------------------------------------------------------------
+        if(np.random.rand(1)<e): # e-greedy 기법을 사용했다.
+            # 0과1사의의 값을 뽑아 그 값이 e보다 작을 경우
+           action = env.action_space.sample() # random하게 action을 취한다.
+        else: #그렇지 않은 경우에
+            action = np.argmax(Q[state, :])
+            # Q-table에서 내가 있는 state에서 취할 수 있는 action들 중 가장 큰 점수의 action을 취한다.
+    #---------------------------------------------------------------------------------
+    
+    #noise----------------------------------------------------------------------------
+        action = np.argmax(Q[state,:] + np.random.randn(1, env.action_space.n)/(i+1))
+        # Q-table에 있는 현재 state에서의 action의 점수와 (1,4)의 shape으로 random하게 숫자를 뽑아 noise를 만들어
+        #원래의 action점수와 noise를 합하여 agent가 더 다양한 길을 선택할 수 있도록 도와준다.
+     #--------------------------------------------------------------------------------
+
+        new_state, reward, done, _ = env.step(action)
+
+        Q[state, action] = reward + dis * np.max(Q[new_state,:])
+        # Q를 업데이트 시키는데, 현재 받을 reward는 그대로 받고, 미래에 받을 reward를 discount시켜 받는다.
+        #-> 더 빠른 길을 찾도록 도와준다.
+
+        rAll += reward
+        state = new_state
+    rlist.append(rAll)
+
+print("success rate: " + str(sum(rlist)/num_episode))
+print("Final Q-Table Values")
+print(Q)
+plt.bar(range(len(rlist)), rlist, color="blue")
+plt.show()
+
+```
