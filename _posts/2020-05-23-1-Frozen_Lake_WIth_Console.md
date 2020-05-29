@@ -2,7 +2,7 @@
 layout: post
 title: Gym 환경 체험하기(Frozen Lake)
 description: "Gym 환경 체험하기(Frozen Lake)"
-modified: 2020-05-15
+modified: 2020-05-23
 tags: [김성훈, Reinforce Learning]
 categories: [김성훈RL]
 ---
