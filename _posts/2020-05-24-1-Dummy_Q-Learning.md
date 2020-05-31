@@ -4,7 +4,7 @@ title: Dummy Q-Learning
 description: "Dummy Q-Learning"
 modified: 2020-05-15
 tags: [김성훈,Rein]
-categories: [김성훈DL]
+categories: [김성훈RL]
 ---
 # Dummy Q-Leraning
 불완전한 Q=Learning코드로 Q-table을 이용하여 agent가 target에도달한다.<br>
