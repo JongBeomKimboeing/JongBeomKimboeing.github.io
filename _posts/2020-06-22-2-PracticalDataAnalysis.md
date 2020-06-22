@@ -519,11 +519,59 @@ def make_dictionary(filename):
 print(make_dictionary(source_file))
 ```
 #### 딕셔너리 키
-<pre>
-딕셔너리의 키는 변화할 수 없는 값만 가능하다.
-그러므로, 딕셔너리 키를 두 개 이상으로 줄 경우 튜플로 묶어준다.
-</pre>
+딕셔너리의 키는 변화할 수 없는 값만 가능하다.<br>
+그러므로, 딕셔너리 키를 두 개 이상으로 줄 경우 튜플로 묶어준다.<br>
 
+ex)<br>
+딕셔너리 키 확인하기
+
+```python
+account = {"kdhong":"Kildong Hong",}
+print("kdhong" in account)
+print("elice" in account)
+```
+
+ex)<br>
+딕셔너리 순회하기<br>
+
+.items()는 튜플 형태로 key와 value를 반환해준다. ("kdhong","Kildong Hong")
+
+```python
+account = {"kdhong":"Kildong Hong",}
+for username, name in account.items():
+    # account.items()는 튜플 형태로 key와 value를 반환해준다. ("kdhong","Kildong Hong")
+    print(username + '-' + name)
+```
+
+ex)<br>
+사용자가 시청한 작품의 리스트를 저장하고 개수를 샌다.
+
+````python
+user_to_titles = {
+    1: [271, 318, 491],
+    2: [318, 19, 2980, 475],
+    3: [475],
+    4: [271, 318, 491, 2980, 19, 318, 475],
+    5: [882, 91, 2980, 557, 35],
+}
+
+
+def get_user_to_num_titles(user_to_titles):
+    user_to_num_titles = {}
+    for data, wlist in user_to_titles.items():
+        user_to_num_titles[data] = len(wlist)
+
+
+    return user_to_num_titles
+
+print(get_user_to_num_titles(user_to_titles))
+```
+<br>
+<br>
+<br>
+<br>
+
+# Json 파일 다루기
 
 
 
