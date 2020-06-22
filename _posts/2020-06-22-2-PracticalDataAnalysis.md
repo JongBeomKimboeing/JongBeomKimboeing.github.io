@@ -549,7 +549,7 @@ for username, name in account.items():
 ex)<br>
 사용자가 시청한 작품의 리스트를 저장하고 개수를 샌다.
 
-````python
+```python
 user_to_titles = {
     1: [271, 318, 491],
     2: [318, 19, 2980, 475],
@@ -576,14 +576,171 @@ print(get_user_to_num_titles(user_to_titles))
 <br>
 
 # Json 파일 다루기
+#### Json을 딕셔너리로 바꿀 경우 -> loads() 이용
+#### 딕셔너리를 Json으로 바꿀 경우 -> dumps() 이용
+
+```python
+# json 패키지를 임포트합니다.
+import json
 
 
+# loads()
+# JSON 파일을 읽고 문자열을 딕셔너리로 변환합니다.
+#-------------------------------------------------------
+def create_dict(filename):
+    with open(filename) as file:
+        json_string = file.read()
+        dict = json.loads(json_string)
+        # 함수를 완성하세요.
+        return dict
+#-------------------------------------------------------
 
 
+# dumps()
+# JSON 파일을 읽고 딕셔너리를 JSON 형태의 문자열로 변환합니다.
+#-------------------------------------------------------
+def create_json(dictionary, filename):
+    with open(filename, 'w') as file:
+        # 함수를 완성하세요.
+        jsonf = json.dumps(dictionary)
+        file.write(jsonf) # 파일에 수정한 dictionary를 적어줘야함
+        pass
+#-------------------------------------------------------
 
 
+src = 'netflix.json'
+dst = 'new_netflix.json'
+
+netflix_dict = create_dict(src)
+print('원래 데이터: ' + str(netflix_dict))
+
+# 생성된 dictionary에 원소 추가
+netflix_dict['Dark Knight'] = 39217
+# dictionary를 json으로 변환
+create_json(netflix_dict, dst)
+updated_dict = create_dict(dst)
+print('수정된 데이터: ' + str(updated_dict))
+```
+<br>
+<br>
+<br>
+<br>
+
+# 집합
+집합은 중복이 없고, 순서가 없다.
+#### 집합은 key와 value가 없고 ','로 구분한다.
+```python
+set1 = {1,2,3} # 집합은 key와 value가 없고 ','로 구분한다.
+```
+
+#### 리스트를 set으로 변환
+```python
+set2 = set([1,2,3]) # 리스트를 set으로 변환
+```
+
+#### set의 성질
+- set([1,2,3])과 set([3,2,1])은 같은 데이터이다. 왜냐하면, 집합은 순서가 상관이 없기 때문이다.
+```python
+set3 = {3,2,3,1} # -> 집합은 중복이 없기 때문에 {3,2,3,1} 또한 {1,2,3}과 같은 집합으로 본다.
+```
+
+#### set의 원소 추가/삭제 (직접 수정한다.)
+- add(data) -> 원소 추가
+- update([list]) -> list안에 들어있는 데이터 원소들을 set에 넣어준다.
+- remove(data) -> 원소 삭제 (반드시 set에 원소가 존재해야함 set에 없는 원소면 error)
+- discard(13) -> 원소 삭제 (원소가 있다면 삭제 없다면 무시)
+
+```python
+num_set = {1,3,5,7}
+num_set.add(9) # 원소 추가
+print(num_set) # {1, 3, 5, 7, 9}
+num_set.update([3, 15, 4]) # list안에 들어있는 데이터 원소들을 set에 넣어준다.
+print(num_set)
+num_set.remove(7) # 원소 삭제 (반드시 set에 원소가 존재해야함 set에 없는 원소면 error)
+num_set.discard(13) # 원소 삭제 (원소가 있다면 삭제 없다면 무시)
+```
+
+#### 집합 다루기
+ex)<br>
+아래와 같이 in과 len 사용 가능
+
+```python
+num_set = {1,3,5,7}
+print(6 in num_set)
+print(len(num_set))
+```
+
+#### 집합의 연산
+- 합집합: set1 | set2 
+- 교집합: set1 & set2
+- 차집합: set1 - set2 
+- xor: set1 ^ set2 
+
+```python
+set1 = {1,3,5,7}
+set2 = {1,3,9,27}
+
+union = set1 | set2 # 합집합
+print(union) # {1, 3, 5, 7, 9, 27}
+
+intersection = set1 & set2 # 교집합
+print(intersection) # {1, 3}
+
+diff = set1 - set2 # 차집합
+print(diff) # {5, 7}
+
+xor = set1 ^ set2 # xor
+print(xor) # {5, 7, 9, 27}
+```
+<br>
+<br>
+<br>
+<br>
+
+# 그래프 다루기
+아래 코드를 참고하여 그래프 그리는데 사용한다.
+```python
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 
 
+# 날짜 별 온도 데이터를 세팅합니다.
+dates = ["1월 {}일".format(day) for day in range(1, 32)]
+temperatures = list(range(1, 32))
+
+
+# 막대 그래프의 막대 위치를 결정하는 pos를 선언합니다.
+pos = range(len(dates))
+
+
+# 한국어를 보기 좋게 표시할 수 있도록 폰트를 설정합니다.
+font = fm.FontProperties(fname='./NanumBarunGothic.ttf')
+
+
+# 막대의 높이가 빈도의 값이 되도록 설정합니다.
+plt.bar(pos, temperatures, align='center')
+
+
+# 각 막대에 해당되는 단어를 입력합니다.
+plt.xticks(pos, dates, rotation='vertical', fontproperties=font)
+#pos 위치에 dates를 넣어준다.
+
+
+# 그래프의 제목을 설정합니다.
+plt.title('1월 중 기온 변화', fontproperties=font)
+
+
+# Y축에 설명을 추가합니다.
+plt.ylabel('온도', fontproperties=font)
+
+
+# 단어가 잘리지 않도록 여백을 조정합니다.
+plt.tight_layout()
+
+
+# 그래프를 표시합니다.
+plt.show()
+```
 
 
 
