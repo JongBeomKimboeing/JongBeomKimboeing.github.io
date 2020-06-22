@@ -466,7 +466,9 @@ fruits = ['cherry', 'apple', 'banana']
 sort_by_last = sorted(fruits, key=reverse) # key에 reverse 함수를 넣었다.
 print(sort_by_last)
 ```
+
 ex)
+
 ```python
 pairs = [
     ('time', 8),
@@ -518,6 +520,7 @@ def make_dictionary(filename):
 # 아래 주석을 해제하고 결과를 확인해보세요.
 print(make_dictionary(source_file))
 ```
+
 #### 딕셔너리 키
 딕셔너리의 키는 변화할 수 없는 값만 가능하다.<br>
 그러므로, 딕셔너리 키를 두 개 이상으로 줄 경우 튜플로 묶어준다.<br>
@@ -566,6 +569,7 @@ def get_user_to_num_titles(user_to_titles):
 
 print(get_user_to_num_titles(user_to_titles))
 ```
+
 <br>
 <br>
 <br>
