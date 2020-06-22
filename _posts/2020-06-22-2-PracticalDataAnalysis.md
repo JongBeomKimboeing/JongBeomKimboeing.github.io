@@ -22,6 +22,7 @@ for sen in range(len(trump_tweets)):
 # 문자열 인덱싱
 (인덱싱을 이용하여 특정 단어를 가져온다.)<br>
 아래 예제는 첫문자가 k인 단어를 추출해내는 코드이다.
+
 ```python
 trump_tweets = ['thank', 'you', 'to', 'president', 'moon', 'of', 'south', 'korea', 'for', 'the', 'beautiful',
                 'welcoming', 'ceremony', 'it', 'will', 'always', 'be', 'remembered']
@@ -42,7 +43,9 @@ print_korea(trump_tweets)
 
 ### 1. startwith()
 - 문자 혹은 문자열로 시작하는 단어를 찾아준다.<br>
+
 ex1)
+
 ```python
 word = "superman"
 print(word.startswith('s'))
@@ -59,7 +62,9 @@ if word.startswith('super'):
 else:
     print("super로 시작하지 않는 단어")
 ```
+
 ex2)
+
 ```python
 
 trump_tweets = ['thank', 'you', 'to', 'president', 'moon', 'of', 'south', 'korea', 'for', 'the', 'beautiful',
@@ -77,6 +82,7 @@ print_korea(trump_tweets)
 
 ### 2. split()
 - split -> 어떤 문자열을 기준으로 쪼게어 list로 만들어준다.
+
 ```python
 intro = "my name is elice"
 print(intro.split()) # 공백 기준 쪼개기
@@ -85,12 +91,14 @@ alphabet = "a,b,c,d"
 print(alphabet.split(',')) # , 기준 쪼개기
 ```
 - split으로 공백 나누기
+
 ```python
 numbers = "  1  2  3  "
 print(numbers.split()) # ['1', '2', '3']  ->  자동으로 공백을 모두 없애준다.
 print(numbers.split(' ')) # ['', '', '1', '', '2', '', '3', '', ''] -> 공백을 인식한다.
 ```
 - split으로 모든 개행 문자들을 없애주기.
+
 <pre>
 ' ' -> 빈칸
 '\t' -> tab
@@ -113,7 +121,9 @@ print(break_into_words(trump_tweets))
 
 ### 3. append
 - list에 원소를 추가한다.<br>
+
 ex)
+
 ```python
 numers = []
 numers.append(1)
@@ -121,7 +131,9 @@ print(numers)
 numers.append(2)
 print(numers)
 ```
+
 ex)<br>
+
 - 아래 코드는 10보다 작은 수를 원소로 추가하는 코드이다.
 ```python
 numbers = [1,2,10,17]
@@ -132,8 +144,10 @@ for num in numbers:
         small_num.append(num)
 print(small_num)
 ```
+
 ex)<br>
 - b로 시작하는 단어를 원소로 추가하는 코드
+
 ```python
 trump_tweets = ['america', 'is', 'back', 'and', 'we', 'are', 'coming', 'back', 'bigger', 'and', 'better', 'and',
                 'stronger', 'than', 'ever', 'before']
@@ -151,14 +165,17 @@ def make_new_list(text):
 new_list = make_new_list(trump_tweets)
 print(new_list)
 ```
+
 <br>
 <br>
 
 ### 4. lower() / upper()
 #### lower() -> 문자 전체를 소문자로 변경한다.
 #### upper() -> 문자 전체를 대문자로 변경한다.
+
 ex)<br>
-lower() / upper()는 원래 문열은 수정하지 않는다.
+lower() / upper()는 원래 문열은 수정하지 않는다.]
+
 ```python
 intro = 'My name is Elice'
 print(intro.upper()) # 문자 전체를 대문자로 변경 (원래 문자열은 수정하지 않는다.)
@@ -166,7 +183,9 @@ print(intro.lower()) # 문자 전체를 소문자로 변경 (원래 문자열은
 intro = intro.lower() # 값을 직접적으로 변경
 print(intro)
 ```
+
 ex)
+
 ```python
 trump_tweets = [
     "FAKE NEWS - A TOTAL POLITICAL WITCH HUNT!",
@@ -184,12 +203,15 @@ def lowercase_all_characters(text):
 
 print('\n'.join(lowercase_all_characters(trump_tweets)))
 ```
+
 <br>
 <br>
 
 ### 5. replace()
 - (replace(변경할 문자, 변경 문자))<br>
+
 ex)
+
 ```python
 intro = "제 이름은 Elice 입니다."
 print(intro.replace('Elice','엘리스')) # (원래 문자열은 수정하지 않는다.)
@@ -198,7 +220,9 @@ print(intro)
 intro = intro.replace('Elice','엘리스')
 print(intro)
 ```
+
 ex)<br>
+
 - replace를 연속해서 쓸 수 있다.
 
 ```python
@@ -228,6 +252,7 @@ print('\n'.join(remove_special_characters(trump_tweets)))
 (파일 읽어오고 활용해는 방식을 다룬다.)<br>
 
 ### 1. 파일 읽고 닫기 / 파일 모드 설정
+
 ```python
 file = open('data.txt') # 파일 열기
 cotent = file.read() # 파일 읽어오기   file.write()를 통해 파일을 수정 가능하다.
@@ -257,7 +282,9 @@ with open('data.txt', 'w') as file: # w: 쓰기 (write) 모드로 파일을 연�
 <br>
 
 ### 2. 파일 내용 한줄 한줄 읽어 출력
+
 ex)
+
 ```python
 filename = 'corpus.txt'
 
@@ -288,7 +315,9 @@ def print_lines(filename):
 </pre>
 
 - 튜플은 각 원소의 값을 수정할 수 없다.<br>
+
 ex)
+
 ```python
 hello = ('a','b','c')
 hello[0] = 'd'  #error
@@ -317,8 +346,11 @@ print(import_as_tuple(filename))
 # 데이터 구조 다루기 (리스트)
 #### 리스트로 리스트 만들기
 
+
 ex)<br>
+
 각 단어의 첫번쨰 문자를 가져온다.
+
 ```python
 words = ['life', 'love', 'faith']
 first_letters = []
@@ -327,8 +359,10 @@ for word in words:
     # 결과: ['l', 'l', 'f']
 print(first_letters)
 ```
+
 위 코드를 더 간결하게 만들어주면 아래와 같다.<br>
 아래와 같이 한 줄로 리스트를 만들어 주는 것을 list comprehension 이라고 한다.
+
 ```python
 words = ['life', 'love', 'faith']
 first_letters = [word[0] for word in words]
@@ -336,7 +370,9 @@ print(first_letters)
 ```
 
 ex)<br>
+
 모든 리스트 원소 하나하나에 1을 더하고 리스트로 만든다.
+
 ```python
 numbers = [1,3,5,7]
 new_numbers = []
@@ -352,7 +388,9 @@ print(new_numbers)
 ```
 
 ex)<br>
+
 모든 리스트 원소 중 짝수 원소를 리스트로 만든다.
+
 ```python
 numbers = [1,3,4,5,6,7]
 even = []
@@ -369,7 +407,9 @@ print(even)
 ```
 
 ex)<br>
+
 a로 시작하는 단어 한줄로 추출
+
 ```python
 words = [
     'apple',
@@ -398,6 +438,7 @@ print(a_words)
 
 ex)
 - sorted(numbers, key=abs) -> key에 적용할 함수를 넣어 sort할 조건을 만들어 줄 수 있다.
+
 ```python
 numbers = [-1,3,-4,5,6,100]
 sort_by_abs = sorted(numbers, key=abs) # key에 적용할 함수를 넣어 sort할 조건을 만들어 줄 수 있다.
@@ -413,6 +454,7 @@ print(sort_by_alphabet)
 #### sorted(list, key=)의 key에 함수를 넣어보기
 ex)
 - key에 사용자 정의함수를 넣었다.
+
 ```python
 sort_by_last = []
 
@@ -446,8 +488,41 @@ def sort_by_frequency(pairs):
 # 아래 주석을 해제하고 결과를 확인해보세요.
 print(sort_by_frequency(pairs))
 ```
+<br>
+<br>
+<br>
+<br>
 
+# 딕셔너리
+#### 기본적인 딕셔너리 활용
+<pre>
+{key: value}
+ -> key: 값을 찾기 위해 넣어주는 데이터, value: 찾고자하는 데이터
+ 원하는 데이터를 빠르게 찾기 위해 사용한다.
+</pre>
 
+ex)
+txt파일에서 데이터를 가져와 dictionary 만들어주기
+```python
+source_file = "netflix.txt"
+
+def make_dictionary(filename):
+    user_to_titles = {}
+    with open(filename) as file:
+        for line in file:
+            user, title = line.strip().split(':')
+            user_to_titles[user] = title
+
+        return user_to_titles
+
+# 아래 주석을 해제하고 결과를 확인해보세요.
+print(make_dictionary(source_file))
+```
+#### 딕셔너리 키
+<pre>
+딕셔너리의 키는 변화할 수 없는 값만 가능하다.
+그러므로, 딕셔너리 키를 두 개 이상으로 줄 경우 튜플로 묶어준다.
+</pre>
 
 
 
