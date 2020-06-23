@@ -8,6 +8,7 @@ categories: [Data Analysis]
 ---
 # 리스트 순회하기
 (for문을 활용하여 리스트를 순회한다.)
+
 ```python
 trump_tweets = [
     'Will be leaving Florida for Washington (D.C.) today at 4:00 P.M. Much work to be done, but it will be a great New Year!',
@@ -35,6 +36,7 @@ def print_korea(text):
 
 print_korea(trump_tweets)
 ```
+
 <br>
 <br>
 
@@ -78,6 +80,7 @@ def print_korea(text):
 
 print_korea(trump_tweets)
 ```
+
 <br>
 
 ### 2. split()
@@ -90,6 +93,7 @@ print(intro.split()) # 공백 기준 쪼개기
 alphabet = "a,b,c,d"
 print(alphabet.split(',')) # , 기준 쪼개기
 ```
+
 - split으로 공백 나누기
 
 ```python
@@ -97,6 +101,7 @@ numbers = "  1  2  3  "
 print(numbers.split()) # ['1', '2', '3']  ->  자동으로 공백을 모두 없애준다.
 print(numbers.split(' ')) # ['', '', '1', '', '2', '', '3', '', ''] -> 공백을 인식한다.
 ```
+
 - split으로 모든 개행 문자들을 없애주기.
 
 <pre>
@@ -116,6 +121,7 @@ def break_into_words(text):
     
 print(break_into_words(trump_tweets))
 ```
+
 <br>
 <br>
 
@@ -135,6 +141,7 @@ print(numers)
 ex)<br>
 
 - 아래 코드는 10보다 작은 수를 원소로 추가하는 코드이다.
+
 ```python
 numbers = [1,2,10,17]
 small_num = []
@@ -208,6 +215,7 @@ print('\n'.join(lowercase_all_characters(trump_tweets)))
 <br>
 
 ### 5. replace()
+
 - (replace(변경할 문자, 변경 문자))<br>
 
 ex)
@@ -243,6 +251,7 @@ def remove_special_characters(text):
 
 print('\n'.join(remove_special_characters(trump_tweets)))
 ```
+
 <br>
 <br>
 <br>
@@ -278,6 +287,7 @@ with open('data.txt') as file:
 with open('data.txt', 'w') as file: # w: 쓰기 (write) 모드로 파일을 연다
     file.write('Hello')
 ```
+
 <br>
 <br>
 
@@ -299,6 +309,7 @@ def print_lines(filename):
 
 # print_lines(filename)
 ```
+
 <br>
 <br>
 <br>
@@ -306,6 +317,7 @@ def print_lines(filename):
 
 # 데이터 구조 다루기 (튜플)
 #### 1. 튜플 vs 리스트
+
 <pre>
 튜플 vs 리스트
 공통점: 순서가 있는 원소들의 집합  -> 인덱싱, 슬라이싱 모두 가능
@@ -323,8 +335,10 @@ hello = ('a','b','c')
 hello[0] = 'd'  #error
 hello = ('d','b','c') # 이와 같이 다시 저장하는 건 가능하다.
 ```
+
 ex)<br>
 cf) strip(): 문자 앞 뒤에 있는 모든 공백문자를 없애준다.
+
 ```python
 filename = 'corpus.txt'
 
@@ -338,6 +352,7 @@ def import_as_tuple(filename):
 
 print(import_as_tuple(filename))
 ```
+
 <br>
 <br>
 <br>
@@ -428,6 +443,7 @@ def filter_by_prefix(words, prefix):
 a_words = filter_by_prefix(words, 'a')
 print(a_words)
 ```
+
 <br>
 <br>
 <br>
@@ -437,6 +453,7 @@ print(a_words)
 #### sorted를 이용하여 정렬 (sorted는 오름차순이 기본)
 
 ex)
+
 - sorted(numbers, key=abs) -> key에 적용할 함수를 넣어 sort할 조건을 만들어 줄 수 있다.
 
 ```python
@@ -444,7 +461,9 @@ numbers = [-1,3,-4,5,6,100]
 sort_by_abs = sorted(numbers, key=abs) # key에 적용할 함수를 넣어 sort할 조건을 만들어 줄 수 있다.
 print(sort_by_abs)
 ```
+
 - 단어로 이루어진 list를 sorted하면, 사전순으로 정렬해준다.
+
 ```python
 fruits = ['cherry', 'apple', 'banana']
 sort_by_alphabet = sorted(fruits) # 사전순으로 정렬해준다.
@@ -452,7 +471,9 @@ print(sort_by_alphabet)
 ```
 
 #### sorted(list, key=)의 key에 함수를 넣어보기
+
 ex)
+
 - key에 사용자 정의함수를 넣었다.
 
 ```python
@@ -490,6 +511,7 @@ def sort_by_frequency(pairs):
 # 아래 주석을 해제하고 결과를 확인해보세요.
 print(sort_by_frequency(pairs))
 ```
+
 <br>
 <br>
 <br>
@@ -497,6 +519,7 @@ print(sort_by_frequency(pairs))
 
 # 딕셔너리
 #### 기본적인 딕셔너리 활용
+
 <pre>
 {key: value}
  -> key: 값을 찾기 위해 넣어주는 데이터, value: 찾고자하는 데이터
@@ -505,6 +528,7 @@ print(sort_by_frequency(pairs))
 
 ex)
 txt파일에서 데이터를 가져와 dictionary 만들어주기
+
 ```python
 source_file = "netflix.txt"
 
@@ -629,17 +653,21 @@ print('수정된 데이터: ' + str(updated_dict))
 # 집합
 집합은 중복이 없고, 순서가 없다.
 #### 집합은 key와 value가 없고 ','로 구분한다.
+
 ```python
 set1 = {1,2,3} # 집합은 key와 value가 없고 ','로 구분한다.
 ```
 
 #### 리스트를 set으로 변환
+
 ```python
 set2 = set([1,2,3]) # 리스트를 set으로 변환
 ```
 
 #### set의 성질
+
 - set([1,2,3])과 set([3,2,1])은 같은 데이터이다. 왜냐하면, 집합은 순서가 상관이 없기 때문이다.
+
 ```python
 set3 = {3,2,3,1} # -> 집합은 중복이 없기 때문에 {3,2,3,1} 또한 {1,2,3}과 같은 집합으로 본다.
 ```
@@ -671,6 +699,7 @@ print(len(num_set))
 ```
 
 #### 집합의 연산
+
 - 합집합: set1 | set2 
 - 교집합: set1 & set2
 - 차집합: set1 - set2 
@@ -692,6 +721,7 @@ print(diff) # {5, 7}
 xor = set1 ^ set2 # xor
 print(xor) # {5, 7, 9, 27}
 ```
+
 <br>
 <br>
 <br>
@@ -699,6 +729,7 @@ print(xor) # {5, 7, 9, 27}
 
 # 그래프 다루기
 아래 코드를 참고하여 그래프 그리는데 사용한다.
+
 ```python
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
@@ -742,7 +773,23 @@ plt.tight_layout()
 plt.show()
 ```
 
+<br>
+<br>
+<br>
+<br>
 
+# CSV 읽어오기
+
+### 1. CSV 읽어오는 방법
+
+```python
+import csv
+
+with open('movies.csv') as file:
+    reader = csv.reader(file, delimiter=',') # 파일 읽어오기
+    for row in reader:
+        print(row[0])
+```
 
 
 
