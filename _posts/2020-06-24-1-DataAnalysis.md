@@ -330,10 +330,104 @@ print(mat3)
 '''
 ```
 
+### 3) np.split: axis 축을 기준으로 나눌 수 있다.
+
+- axis=0 으로 나눈 경우
+
+```python
+atrix = np.arange(16).reshape(4,4)
+print(matrix)
+'''
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]
+ [12 13 14 15]]
+'''
+upper, lower = np.split(matrix, [3], axis=0) #[3] -> 3 이전과 이후로 분리
+print(upper)
+'''
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+'''
+print(lower)
+'''
+[[12 13 14 15]]
+'''
+```
+
+- axis=1 로 나눈 경우
+
+```python
+matrix = np.arange(16).reshape(4,4)
+print(matrix)
+'''
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]
+ [12 13 14 15]]
+'''
+left, right = np.split(matrix, [3], axis=1)
+print(left)
+'''
+[[ 0  1  2]
+ [ 4  5  6]
+ [ 8  9 10]
+ [12 13 14]]
+'''
+print(right)
+'''
+[[ 3]
+ [ 7]
+ [11]
+ [15]]
+'''
+```
+
+- split 예시 문제
+
+```python
+import numpy as np
+
+print("matrix")
+matrix = np.array([[ 0, 1, 2, 3],
+                   [ 4, 5, 6, 7],
+                   [ 8, 9,10,11],
+                   [12,13,14,15]])
+print(matrix, "\n")
+
+# Q1. matrix를 [3] 행에서 axis 0으로 나누기
+'''
+[[0  1   2  3]
+ [4  5   6  7]
+ [8  9  10 11]],
+
+ [12 13 14 15]
+'''
+a, b = np.split(matrix, [3], axis=0)
+
+print(a, "\n")
+print(b, "\n")
 
 
+# Q2. matrix를 [1] 열에서 axis 1로 나누기
+'''
+[[ 0]
+ [ 4]
+ [ 8]
+ [12]],
 
+[[ 1  2  3]
+ [ 5  6  7]
+ [ 9 10 11]
+ [13 14 15]]
+'''
 
+c, d = np.split(matrix, [1], axis=1) # [1] 이전과 이후로 분리
+
+print(c, "\n")
+print(d)
+```
 
 
 
