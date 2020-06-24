@@ -265,6 +265,8 @@ print(matrix[2,3])
 print(matrix[:2,1:4])
 ```
 
+<br>
+<br>
 
 ## 10. reshape & 이어붙이고 나누기
 
