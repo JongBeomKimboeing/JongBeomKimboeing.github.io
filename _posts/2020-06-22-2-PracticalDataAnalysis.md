@@ -791,12 +791,271 @@ with open('movies.csv') as file:
         print(row[0])
 ```
 
+### 2. CSV 파일에서 데이터 추출
+
+```python
+import csv
+
+def print_book_info(filename):
+
+    with open(filename) as file:
+        # ',' 기호로 분리된 CSV 파일을 처리하세요..
+        reader = csv.reader(file, delimiter=',')
+        # 처리된 파일의 각 줄을 불러옵니다.
+        for row in reader:
+            # 함수를 완성하세요.
+            title = row[0]
+            author = row[1]
+            pages = row[3]
+            print("{} ({}): {}p".format(title, author, pages))
 
 
+# 아래 주석을 해제하고 실행 결과를 확인해보세요.
+filename = 'books.csv'
+print_book_info(filename)
+```
+
+### 3. CSV 데이터를 JSON 형식으로 저장
+
+- reader = csv.reader(src, delimiter=',') 를 이용하여 데이터를 읽어온다.
+- reader를 info를 통해 for문으로 한줄 한줄 가져온다.
+- info를 인덱싱하여 딕셔너리로 저장한다.
+- with open(dst_file, 'w') as dst: 를 이용하여 dst_file을 쓰기모드로 연다.
+- jbook = json.dumps(books) 딕셔너리를 JSON 형식으로 변환한다.
+- dst.write(jbook)  dst_file에 쓴다.
 
 
+```python
+import csv
+import json
+
+def books_to_json(src_file, dst_file):
+    # 아래 함수를 완성하세요.
+    books = []
+    with open(src_file) as src:
+        reader = csv.reader(src, delimiter=',')
+
+        # 각 줄 별로 대응되는 book 딕셔너리를 만듭니다.
+        for info in reader:
+            # 책 정보를 저장하는 딕셔너리를 생성합니다.
+            book = {
+                'title': info[0],
+                'author': info[1],
+                'genre': info[2],
+                'pages': int(info[3]),
+                'publisher': info[4]
+            }
+            books.append(book)
+
+    with open(dst_file, 'w') as dst:
+        # JSON 형식으로 dst_file에 저장합니다.
+        jbook = json.dumps(books)
+        dst.write(jbook)
+        pass
+
+src_file = 'books.csv'
+dst_file = 'books.json'
+books_to_json(src_file, dst_file)
+```
+
+<br>
+<br>
+<br>
+<br>
+
+# 고급 파이썬
+
+### 1. lambda
+- 함수를 간단하게, 짧게 만들 수 있다.
+
+#### 1) lambda 형식
+
+lambda 입력: 리턴값
+
+#### 2) lambda를 잘 만들었는지 확인 방법
+
+assert() -> true면 아무것도 안 함, false이면 error가 뜸 (lambda를 잘 만들었는 지 확인 할 때 쓴다.)
+
+#### lambda와 assert 사용 예시
+
+```python
+#num을 제곱한 값을 리턴합니다.
+
+def _square(num):
+    return num * num
+
+# _square()와 동일한 기능을 하는 lambda 함수 square를 만들어 보세요.
+square = lambda x: x*x
+
+#string이 빈 문자열일 경우 빈 문자열을, 아니면 첫 번째 글자를 리턴합니다.
+
+def _first_letter(string):
+    return string[0] if string else ''
+
+first_letter = lambda string: string[0] if string else ''
 
 
+# assert를 이용하여 두 함수의 기능이 동일한 지 테스트합니다. 아래 주석을 해제하고 결과 값을 확인해보세요.
+testcases1 = [3, 10, 7, 1, -5]
+for num in testcases1:
+    assert(_square(num) == square(num))
+
+testcases2 = ['', 'hello', 'elice', 'abracadabra', '  abcd  ']
+for string in testcases2:
+    assert(_first_letter(string) == first_letter(string))
+
+# # 위의 assert 테스트를 모두 통과해야만 아래의 print문이 실행됩니다.
+print("성공했습니다!")
+```
+
+<br>
+<br>
+
+### 2. 함수를 리턴하는 함수
+
+- min_validator, max_validator 가 helper 함수를 return 하는 것을 볼 수 있다.
+- return 된 helper 함수를 사용하는 것도 주목하자.
+
+```python
+def min_validator(minimum):
+    def helper(n):# n의 타입이 정수가 아니면 False를 리턴합니다.
+        if type(n) is not int:
+            return False
+        if n < minimum:
+            return False
+        else:
+            return True
+    # 아래 함수를 완성하세요.
+    return helper
+
+
+def max_validator(maximum):
+    def helper(n):
+        # n의 타입이 정수가 아니면 False를 리턴합니다.
+        if type(n) is not int:
+            return False
+
+        # 아래 함수를 완성하세요.
+        if n > maximum:
+            return False
+        else:
+            return True
+
+    return helper
+
+
+def validate(n, validators):
+    # validator 중 하나라도 통과하지 못하면 False를 리턴합니다.
+    for validator in validators:
+        if not validator(n):
+            return False
+
+    return True
+
+# 작성한 함수를 테스트합니다. # 아래 주석을 해제하고 결과 값을 확인해보세요.
+# # 나이 데이터를 검증하는 validator를 선언합니다.
+age_validators = [min_validator(0), max_validator(120)]
+ages = [9, -3, 7, 33, 18, 1999, 287, 0, 13]
+
+# # 주어진 나이 데이터들에 대한 검증 결과를 출력합니다.
+print("검증 결과")
+for age in ages:
+    result = "유효함" if validate(age, age_validators) else "유효하지 않음"
+    print("{}세 : {}".format(age, result))
+```
+
+<br>
+<br>
+
+### 3. map
+
+#### 1) map의 역할
+- 어떤 데이터가 주어졌을 때 데이터의 원소에 대해서 동일한 함수를 취해준다.
+
+#### 2) map의 형식과 의미
+- map(함수, 리스트) -> 리스트 원소 각각에 함수를 적용해라.
+
+#### 3) map의 이용
+<pre>
+map의 리턴은 리스트가 아니라, map type이다.
+map은 map을 선언할 당시에는 원소를 함수에 적용시키지 않는다.
+다만, map으로 만든 원소를 실질적으로 사용할 때 함수에 원소가 적용된다.
+그러므로, map 결과물을 얻고 싶다면, 결과물을 list()형변환을 해야함.
+</pre>
+
+#### 4) map 사용 예시
+
+- 아래 코드는 lambda 함수인 get_title을 reader 데이터에 적용시켰다.
+
+```python
+import csv
+
+def get_titles(books_csv):
+    with open(books_csv) as books:
+        reader = csv.reader(books, delimiter=',')
+        # 함수를 완성하세요.
+        get_title = lambda row: row[0]
+        titles = map(get_title, reader)
+
+        return list(titles)
+
+# 작성한 코드를 테스트합니다. 주석을 해제하고 실행하세요.
+books = 'books.csv'
+titles = get_titles(books)
+for title in titles:
+    print(title)
+```
+
+<br>
+<br>
+
+### 4. filter
+
+#### 1) filter의 역할
+- 모든 원소에 함수를 적용시켜 true가 나온 결과들만 모아줌.
+
+#### 2) filter 형식
+- filter(함수, 리스트)
+
+#### 3) filter의 이용
+<pre>
+filter 또한 map과 같이 바로 연산을 안 해주고 원소를 이용할 때 연산을 해준다.
+그러므로, 출력시 리스트로 보고싶다면, list() 형변환을 해주어야한다.
+</pre>
+
+#### 4) filter 사용 예시
+
+```python
+starts_with_r = lambda w: w.startswith('r')
+words = ['real','man','rhythm','dog']
+r_words = filter(starts_with_r, words)
+print(list(r_words))
+```
+
+#### 5) filter 실습
+books.csv 파일을 읽어서 페이지 수가 250이 넘는 책들의 제목을 리스트로 리턴하는 get_titles_of_long_books() 함수를 완성하세요.
+
+```python
+# CSV 모듈을 임포트합니다.
+import csv
+def get_titles_of_long_books(books_csv):
+    with open(books_csv) as books:
+        reader = csv.reader(books, delimiter=',')
+        # 함수를 완성하세요.
+        is_long = lambda row: int(row[3]) > 250
+        get_title = lambda row: row[0]
+
+        long_books = filter(is_long, reader)
+        long_book_titles = map(get_title, long_books)
+
+        return list(long_book_titles)
+
+# 작성한 함수를 테스트합니다. 주석을 해제하고 실행하세요.
+books  = 'books.csv'
+titles = get_titles_of_long_books(books)
+for title in titles:
+    print(title)
+```
 
 
 
