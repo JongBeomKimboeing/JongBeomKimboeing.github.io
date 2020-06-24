@@ -11,7 +11,7 @@ categories: [Numpy]
 ## 1. numpy 란 무엇인가?
 Numerical Python의 약자로 python에서 대규모 다차원 배열을 다룰 수 있게 도와주는 라이브러리
 
-<pre><font size="17px">
+<pre><font size="12px">
 데이터의 대부분은 숫자 배열로 이루어져 있다.
 -> 숫자 배열을 다루는 데, python list보다 numpy를 이용하는 이유는
    numpy는 list에 비해서 빠른 연산을 지원하고 메모리를 효율적으로 사용하기 때문에 이용한다.
