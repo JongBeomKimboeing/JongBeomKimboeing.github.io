@@ -363,7 +363,7 @@ plt.show()
 <br>
 <br>
 
-## matplot with pandas
+## 8. matplot with pandas
 
 pandas의 data frame이나 series data를 넣어서 그래프를 그려보자.
 
@@ -541,12 +541,195 @@ plt.show()
 
 
 
+<br>
+<br>
+
+## 9. 실전문제로 데이터 처리 과정 / 그래프 그리기 익히기
 
 
+### ex1)
+
+역대 월드컵의 경기당 득점 수<br>
+
+- ax[1].grid(True) # 격자 추가
+- data frame의 새로운 열 만들기
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+
+world_cups = pd.read_csv('WorldCups.csv')
+world_cups = world_cups[["Year","GoalsScored","MatchesPlayed"]]
+world_cups['GoalsPerMatch'] = world_cups["GoalsScored"] / world_cups["MatchesPlayed"]
+
+fig, ax = plt.subplots(2,1,figsize=(4,8))
+
+ax[0].plot(world_cups["Year"], world_cups["MatchesPlayed"], marker="o",color='blue',label="matches")
+
+ax[0].bar(world_cups["Year"], world_cups["GoalsScored"], color="0.5",label="goals")
+
+ax[0].legend(loc="upper left")
+ax[1].grid(True) # 격자 추가
+ax[1].plot(world_cups["Year"], world_cups['GoalsPerMatch'], marker="o", color='r',label='goal_per_matches')
+
+ax[1].legend(loc="lower left")
+plt.show()
+```
+
+### ex2)
+
+역대 월드컵의 국가별 득점 수<br>
+
+- 과정을 중심으로 볼 것
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+# 데이터 전처리
+#----------------------------------------------------------------------------------------------------------------------------
+world_cups_matches = pd.read_csv('WorldCupMatches.csv')
+world_cups_matches = world_cups_matches.replace('Germany FR','Germany').replace('C�te d’Ivoire','Côte d’Ivoire').replace\
+    ('rn">Bosnia and Herzegovina','Bosnia and Herzegovina').replace('rn">Serbia and Montenegro','Serbia and Montenegro').replace\
+    ('rn">Trinidad and Tobago','Trinidad and Tobago').replace('rn">United Arab Emirates','United Arab Emirates').replace\
+    ('Soviet Union','Russia').replace('rn">Republic of Ireland','Republic of Ireland')
+
+world_cups_matches = world_cups_matches.drop_duplicates()
+#------------------------------------------------------------------------------------------------------------------------------
+
+# 데이터 알맞게 고치기
+#------------------------------------------------------------------------------------------------
+home = world_cups_matches.groupby(['Home Team Name']).aggregate({'Home Team Goals':np.sum})
+
+away = world_cups_matches.groupby(['Away Team Name']).aggregate({'Away Team Goals':np.sum})
+
+goal_per_country = pd.concat([home,away], axis=1, sort=True).fillna(0)
+# concat: away와 home 합치기 (결측값을 제거하기 위해 fillna 함수를 적용합니다.)
+# axis=0: 위+아래로 합치기, axis=1: 왼쪽+오른쪽 합치기
+goal_per_country['Goal'] = goal_per_country['Home Team Goals'] + goal_per_country['Away Team Goals']
+goal_per_country = goal_per_country['Goal'].sort_values(ascending=False) # 값을 가져와서 sort
+goal_per_country = goal_per_country.astype(int) # 정수로 변환
+#----------------------------------------------------------------------------------------------------
+
+# 그래프 그리기
+#-------------------------------------------------------------------------------------------------
+goal_per_country = goal_per_country.iloc[:10]
+x = goal_per_country.index
+y = goal_per_country.values
+fig, ax = plt.subplots()
+ax.bar(x, y, width=0.5)
+plt.xticks(x, rotation=30) # x의 나라 이름들을 30도 기울여준다.
+plt.tight_layout() # 그래프가 짤리지 않게 위치조정
+plt.show()
+#-----------------------------------------------------------------------------------------------
+```
 
 
+### ex3)
+2014 월드컵 다득점 국가 순위<br>
+
+- 과정을 중심으로 볼 것
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+# 데이터 전처리
+#----------------------------------------------------------------------------------------------------------------------------
+world_cups_matches = pd.read_csv('WorldCupMatches.csv')
+world_cups_matches = world_cups_matches.replace('Germany FR','Germany').replace('C�te d’Ivoire','Côte d’Ivoire').replace\
+    ('rn">Bosnia and Herzegovina','Bosnia and Herzegovina').replace('rn">Serbia and Montenegro','Serbia and Montenegro').replace\
+    ('rn">Trinidad and Tobago','Trinidad and Tobago').replace('rn">United Arab Emirates','United Arab Emirates').replace\
+    ('Soviet Union','Russia').replace('rn">Republic of Ireland','Republic of Ireland')
+
+world_cups_matches = world_cups_matches.drop_duplicates()
+#------------------------------------------------------------------------------------------------------------------------------
+
+# 데이터 알맞게 가공
+#-----------------------------------------------------------------------------------
+world_cups_matches = world_cups_matches[world_cups_matches['Year'] == 2014]
+
+home = world_cups_matches.groupby('Home Team Name')['Home Team Goals'].sum()
+
+away = world_cups_matches.groupby('Away Team Name')['Away Team Goals'].sum()
+
+goals = pd.concat([home,away], axis=1).fillna(0)
+goals['Goals'] = goals['Home Team Goals'] + goals['Away Team Goals']
+goals = goals['Goals'].sort_values(ascending=False)
+goals = goals.astype(int)
+#-----------------------------------------------------------------------------------
+goals.plot(x= goals.index, y= goals.values, kind="bar", figsize=(12,12),fontsize=14)
+plt.tight_layout()
+
+# fig, ax = plt.subplots()
+# ax.bar(team_goal_2014.index, team_goal_2014.values)
+# plt.xticks(rotation = 90)
+# plt.tight_layout()
+
+plt.show()
+```
+
+### ex4)
+월드컵 4강 이상 성적 집계하기<br>
+
+- 과정과 그래프를 그리는 2가지 방법을 중심으로 보기
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+
+world_cups = pd.read_csv("WorldCups.csv")
+winner = world_cups['Winner']
+runners = world_cups['Runners-Up']
+third = world_cups['Third']
+fourth = world_cups['Fourth']
+
+# value_counts 함수를 이용해 각 시리즈 데이터에 저장된 값을 세어주고 내림차순으로 저장합니다.
+winner_count = pd.Series(winner.value_counts())
+runners_up_count = pd.Series(runners.value_counts())
+third_count = pd.Series(third.value_counts())
+fourth_count = pd.Series(fourth.value_counts())
+
+result = pd.concat([winner_count, runners_up_count,third_count,fourth_count], axis=1).fillna(0)
+result = result.astype(int)
+print(result)
+x = np.array(list(range(0,len(result))))
 
 
+result.plot(y=["Winner", "Runners-Up", "Third", "Fourth"], kind= "bar", color=['gold','silver','brown','black'], figsize=(15,12),
+            fontsize=10, width=0.8, align='center') # result 데이터에 직접 plot 함수를 호출 함.
+            
+            
+'''
+# 하나하나 설정해 줌
+fig, ax = plt.subplots()
+plt.xticks(x, result.index, rotation=90)
+plt.tight_layout()
+
+ax.bar(x - 0.3, result['Winner'], color='gold', width=0.2, label='Winner')
+ax.bar(x - 0.1, result['Runners-Up'], color='silver', width = 0.2, label='Runners_up')
+ax.bar(x + 0.1, result['Third'],      color = 'brown',  width = 0.2, label = 'Third')
+ax.bar(x + 0.3, result['Fourth'],     color = 'black',  width = 0.2, label = 'Fourth')
+'''
+
+
+plt.show()
+```
 
 
 
