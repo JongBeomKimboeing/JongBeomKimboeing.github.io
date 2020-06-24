@@ -3,7 +3,7 @@ layout: post
 title: Dummy Q-Learning
 description: "Dummy Q-Learning"
 modified: 2020-05-15
-tags: [김성훈,Rein]
+tags: [김성훈,Reinforce Learning]
 categories: [김성훈RL]
 ---
 # Dummy Q-Leraning
