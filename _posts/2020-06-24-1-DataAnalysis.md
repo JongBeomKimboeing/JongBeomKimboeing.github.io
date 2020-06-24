@@ -300,7 +300,7 @@ print(np.concatenate([x,y])) # [0 1 2 3 4 5]
 
 - np.concatenate([],axis=) -> axis 축을 기준으로 이어붙일 수 있다.
 
-** axis 구분이 매우 중요하다. **
+**axis 구분이 매우 중요하다.**
 
 ```python
 matrix = np.arange(4).reshape(2,2)
