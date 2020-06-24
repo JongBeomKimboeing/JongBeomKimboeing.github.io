@@ -431,10 +431,196 @@ print(c, "\n")
 print(d)
 ```
 
+<br>
+<br>
+
+## 11. numpy 연산
+일반 python의 list를 이용하여 연산을 하는 것보다 numpy를 이용하여 연산을 하는 것이 훨씬 빠르다.
+
+### 1) numpy 기본 연산
+-  + - * /를 지원해준다.
+
+```python
+import numpy as np
+x = np.arange(4)
+print(x) # result: [0 1 2 3]
+
+print(x+5) # result: [5 6 7 8]
+print(x-5) # result: [-5 -4 -3 -2]
+print(x*5) # result: [ 0  5 10 15]
+print(x/5) # result: [0.  0.2 0.4 0.6]
+```
+
+### 2) 행렬간 연산
+- 다차원 행렬에서도 적용이 가능하다.
+
+```python
+x = np.arange(4).reshape((2,2))
+y = np.random.randint(10, size=(2,2))
+print(x)
+'''
+[[0 1]
+ [2 3]]
+'''
+print(y)
+'''
+[[3 6]
+ [2 2]]
+'''
+print(x+y)
+'''
+[[3 7]
+ [4 5]]
+'''
+print(x-y)
+'''
+[[-3 -5]
+ [ 0  1]]
+'''
+```
+
+### 3) 브로드캐스팅
+broadcasting: shape이 다른 array끼리 연산을 하게 해준다.
+
+```python
+import numpy as np
+
+a = np.arange(6).reshape(6,1)
+b = np.arange(6)
+print(a)
+'''
+[[0]
+ [1]
+ [2]
+ [3]
+ [4]
+ [5]]
+'''
+print(b)
+'''
+[0 1 2 3 4 5]
+'''
+print(a+b)
+'''
+[[ 0  1  2  3  4  5]
+ [ 1  2  3  4  5  6]
+ [ 2  3  4  5  6  7]
+ [ 3  4  5  6  7  8]
+ [ 4  5  6  7  8  9]
+ [ 5  6  7  8  9 10]]
+'''
+# -> a는 열을 추가하여, b는 행을 추가하여 6*6행렬을 만들어 a,b를 계산하여 결과값을 얻는다.
+```
+
+<br>
+<br>
+
+## 12. 집계함수 & 마스킹 연산
+
+### 1) 집계함수
+
+<pre>
+집계함수
+집계: 데이터에 대한 요약 통계를 볼 수 있다.
+</pre>
+
+아래 코드 참고
+
+```python
+x = np.arange(8).reshape((2,4))
+print(x)
+'''
+[[0 1 2 3]
+ [4 5 6 7]]
+'''
+print(np.sum(x)) # 28
+print(np.min(x)) # 0
+print(np.max(x)) # 7
+print(np.mean(x)) # 3.5  ->평균
+print(np.std(x)) # 2.29128784747792   ->표준편차
+
+```
 
 
+### 2) 축을 기준으로 한 sum
+
+```python
+x = np.arange(8).reshape((2,4))
+print(x)
+'''
+[[0 1 2 3]
+ [4 5 6 7]]
+'''
+print(np.sum(x, axis=0))
+# [ 4  6  8 10]
+
+print(np.sum(x, axis=1))
+# [ 6 22]
+```
 
 
+<br>
+<br>
+
+## 13. 마스킹 연산
+- 마스킹 연산: True, False array를 통해서 특정 값들을 뽑아내는 방법이다.
+
+<br>
+
+ex1)
+
+```python
+x = np.arange(5)
+
+print(x<3)
+# [ True  True  True False False]
+
+print(x>5)
+# [False False False False False]
+
+print(x[x<3])
+# [0 1 2]   -> 이와 같이 연산 결과가 true인 index의 값을 가져온다.
+
+```
+
+<br>
+<br>
+
+## 14. 집계함수와 마스킹연산 연습문제
+
+```python
+import numpy as np
+
+matrix = np.arange(8).reshape((2, 4))
+print(matrix)
+'''
+[[0 1 2 3]
+ [4 5 6 7]]
+'''
+# Q1. sum 함수로 matrix의 총 합계를 구해 출력해보세요.
+a = np.sum(matrix)
+print(a) # 28
+# Q2. max 함수로 matrix 중 최댓값을 구해 출력해보세요.
+a = np.max(matrix)
+print(a) # 7
+# Q3. min 함수로 matrix 중 최솟값을 구해 출력해보세요.
+a = np.min(matrix)
+print(a) # 0
+# Q4. mean 함수로 matrix의 평균값을 구해 출력해보세요.
+a = np.mean(matrix)
+print(a) # 3.5
+# Q5. sum 함수의 axis 매개변수로 각 열의 합을 구해 출력해보세요.
+a = np.sum(matrix, axis=1)
+print(a) # [ 6 22]
+# Q6. sum 함수의 axis 매개변수로 각 행의 합을 구해 출력해보세요.
+a = np.sum(matrix, axis=0)
+print(a) # [ 4  6  8 10]
+# Q7. std 함수로 matrix의 표준편차를 구해 출력해보세요.
+a = np.std(matrix)
+print(a) # 2.29128784747792
+# Q8. 마스킹 연산을 이용하여 matrix 중 5보다 작은 수들만 추출하여 출력해보세요.
+print(matrix[matrix<5])  #[0 1 2 3 4]
+```
 
 
 
