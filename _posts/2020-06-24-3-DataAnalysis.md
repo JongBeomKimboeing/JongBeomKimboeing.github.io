@@ -10,6 +10,9 @@ categories: [Matplot]
 # matplotlib
 -> 파이썬에서 데이터를 그래프나 차트로 시각화할 수 있는 라이브러리
 
+<br>
+<br>
+
 ## 1. 간단한 그래프 그려보기
 
 ex1)
@@ -40,6 +43,9 @@ plt.ylabel("y") # y축에 label을 지정한다.
 plt.show() # 그래프 보여주기
 ```
 
+<br>
+<br>
+
 ## 2. 객체기반 스타일로 그래프 그리기
 - 객체기반 스타일 (objective oriented interface)(-> 객체기반이 더 명시적으로 설정해준다.)
 -> 전 코드(state machine interface)는 자동으로 figure와 ax를 생성을 해주는 반면,<br>
@@ -59,6 +65,9 @@ ax.set_ylabel("y") # y label 설정
 plt.show() # 그래프 보여주기
 ```
 
+<br>
+<br>
+
 ## 3. matplotlib의 구조
 
 <pre>
@@ -72,6 +81,9 @@ Major tick: 큰 눈금
 Minor tick: 작은 눈금
 Legend: 범례 (도표의 내용을 알기 위해 본보기로 표시해 둔 기호와 부호의 설명)
 </pre>
+
+<br>
+<br>
 
 ## 4. 기본적인 그래프 그리고 저장하기
 
@@ -100,6 +112,9 @@ fig.savefig("first_plot.png") # 저장은 전체 도화지를 저장해야하므
 plt.show()
 ```
 
+<br>
+<br>
+
 ## 5. 여러개 그래프 그리기
 -> axes를 배열형태로 나누어 그린다.
 ```python
@@ -113,6 +128,8 @@ axes[1].plot(x, np.cos(x)) # 두 번째 그래프를 그린다 (x 축에는 x, y
 plt.show()
 ```
 
+<br>
+<br>
 
 ## 6. matplotlib의 옵션들
 
@@ -179,6 +196,9 @@ ax.plot(x, x+6, marker="s") # 's'로 표시하면 '사각형'으로 marker가 �
 ax.plot(x, x+8, marker="*") # '*'로 표시하면 '별'로 marker가 표시 됨
 plt.show()
 ```
+
+<br>
+<br>
 
 ## 2) 그래프 자체에 대한 옵션
 
@@ -253,27 +273,271 @@ plt.show()
 scatter = plt.scatter(x,y)
 ```
 
+<br>
+<br>
 
 ## 7. Bar & Histogram
 
+### 1) bar plot
+
+- ax.bar(x, x*2) : bar로 지정하여, bar 그래프를 그릴 수 있다.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(10) # x 값은 0~9 사이의 값
+fig, ax = plt.subplots(figsize=(12,4)) # figure size 조정(여기서는 가로 12 세로 4)
+ax.bar(x, x*2) # bar로 지정하여, bar 그래프를 그릴 수 있다.
+plt.show()
+```
+
+### 2) 누적 bar plot
+-> bottom을 계속해서 지정해주어 쌓아 올린다.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.random.rand(3)
+y = np.random.rand(3) # x, y, z 모두 0 ~ 1 사이의 데이터 3개를 추출한다.
+z = np.random.rand(3)
+
+data = [x, y, z]
+
+fig, ax = plt.subplots()
+x_ax = np.arange(3) # 0,1,2를 가져온다.
+
+#-----------------------------------------------------------------------------------------------------------------------------------
+for i in x_ax: #x_ax를 하나씩 가져온다.
+    ax.bar(x_ax, data[i], bottom= np.sum(data[:i], axis=0))
+    # x_ax 번째 막대그래프에 data[i]번째(x,y,z)를 그리고,  bottom= np.sum(data[:i], axis=0)을 통해 data를 쌓을 시작위치를 설정해준다.
+#-----------------------------------------------------------------------------------------------------------------------------------
+
+ax.set_xticks(x_ax) # tick을 x_ax로 설정해준다.
+ax.set_xticklabels(["A", "B", "C"]) # x_ax의 0,1,2를 A,B,C로 표현한다.
+plt.show()
+```
+
+### 3) Histogram(도수분포표)
+
+- ax.hist(data, bins=) 을 이용하여 그린다.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+data = np.random.randn(1000)
+ax.hist(data, bins=50) # histogram을 그리기 위해 hist를 사용한다.
+                       # bins: 막대기의 개수를 지정해준다.
+plt.show()
+```
+
+### 4) 다양하게 그래프 그리기
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+# 아래는 한글 설정을 위한 코드이다.
+fname= 'NanumBarunGothic.ttf'
+font = fm.FontProperties(fname= fname).get_name()
+plt.rcParams["font.family"] = font
 
 
+x = np.array(["축구", "야구", "농구", "배드민턴", "탁구"])
+y = np.array([18, 7, 12, 10, 8])
+z = np.random.randn(1000)
+
+fig, axes = plt.subplots(1, 2, figsize=(8, 4)) #그래프는 가로로 2개를 나열했고, 각각의 그래프 크기는 가로:8, 세로:4이다.
+
+axes[0].bar(x, y) # 첫번째 그래프는 bar 형식으로 그린다.
+axes[1].hist(z, bins=50) # 두번째 그래프는 histogram 형식으로 그린다.
+
+plt.show()
+```
+
+<br>
+<br>
+
+## matplot with pandas
+
+pandas의 data frame이나 series data를 넣어서 그래프를 그려보자.
+
+<br>
+<br>
+
+### ex1)
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("pokemon.csv")
+
+fire = df[(df['Type 1'] == 'Fire') | (df['Type 2'] == 'Fire')]
+water = df[(df['Type 1'] == 'Water') | (df['Type 2'] == 'Water')]
+
+fig, ax = plt.subplots()
+ax.scatter(fire['Attack'], fire['Defense'], color="R", label='Fire', marker='*', s=50)
+# 점의 x위치, 점의 y위치, 색, 라벨, marker, marker의 사이즈를 정해준다.
+ax.scatter(water['Attack'], water['Defense'], color="B", label='Water', s=50)
+# marker가 초기화 돼 있지 않으면 원으로 표시된다.
+ax.set_xlabel("Attack")
+ax.set_ylabel("Defense")
+ax.legend(loc="upper right")
+
+plt.show()
+```
+
+<br>
+
+ ### ex2)
+ 토끼와 거북이 경주 결과 시각화 <br>
+-> 내 코드는 x축을 직접 지정해 줬다. 그러나, dataframe의 index가 x 데이터로 바로 변환된다는 점을 이용해도 된다.
+
+```python
+from matplotlib import pyplot as plt
+import pandas as pd
+
+plt.rcParams["font.family"] = 'NanumBarunGothic'
 
 
+def main():
+    # 아래 경로에서 csv파일을 읽어서 시각화 해보세요
+    # 경로: "./data/the_hare_and_the_tortoise.csv"
+    read = pd.read_csv("the_hare_and_the_tortoise.csv")
+    x = read["시간"]
+    rabbit = read["토끼"]
+    turtle = read["거북이"]
+    fig, ax = plt.subplots()
+    ax.plot(x, rabbit, color='blue', label="rabbit")
+    ax.plot(x, turtle, color='orange', label="turtle")
+    ax.legend(loc="upper left")
+    plt.show()
+    pass
+
+if __name__ == "__main__":
+    main()
+```
+
+### ex2-1)
+
+아래 코드는 dataframe의 column을 x로 바로 지정해주어 명시적으로 x 값을 지정해주지 않아도 된다.
+
+```python
+from matplotlib import pyplot as plt
+import pandas as pd
 
 
+def main():
+    # 아래 경로에서 csv파일을 읽어서 시각화 해보세요
+    # 경로: "./data/the_hare_and_the_tortoise.csv"
+    read = pd.read_csv("the_hare_and_the_tortoise.csv", index_col=0) # 0 번째 column을 index로 사용한다.
+    # read.set_index("시간", inplace=True) # 0 번째 column을 index로 사용한다.
+    rabbit = read["토끼"]
+    turtle = read["거북이"]
+    fig, ax = plt.subplots()
+    ax.plot(rabbit, color='blue', label="rabbit")
+    ax.plot(turtle, color='orange', label="turtle")
+    ax.legend(loc="upper left")
+    plt.show()
+    pass
+
+if __name__ == "__main__":
+    main()
+
+```
+
+### ex3) 월드컵 우승국가 시각화
+
+(어떻게 그래프를 그리는지 참고할 )
+
+```python
+from matplotlib import pyplot as plt
+import pandas as pd
+plt.rcParams["font.family"] = 'NanumBarunGothic'
 
 
+# 아래 경로에서 csv파일을 읽어서 시각화 해보세요
+# 경로: "./data/WorldCups.csv"
+df = pd.read_csv("WorldCups.csv")    # 월드컵 정보를 담는 csv 파일을 읽어옵니다.
+                                            # 어떤 자료를 갖는지 직접 확인해보세요
+
+winners = df["Winner"] # 읽어온 데이터 프레임 중 "우승국"을 의미하는 칼럼을 가져오세요.
+print(winners)
+winner_dict = {}
+for i in winners:
+    winner_dict[i] = len(winners[i == winners])
+print(winner_dict)
+x = list(winner_dict.keys())
+y = list(winner_dict.values())
+fig, ax = plt.subplots(figsize=(8, 8))
+
+ax.bar(x,y)
+ax.set_xlabel("Country")
+ax.set_ylabel("Number")
+ax.set_xticks(x)
+
+#for key, value in zip(list(winner_dict.keys()), list(winner_dict.values())):
+#    ax.bar(key, value)   # -> 내가 짜본 코드
 
 
+plt.show()
+
+```
+
+### ex3-1) 월드컵 우승국가 시각화
+
+dictionary를 다루는 코드 부분을 변형시켰다
+
+```python
+from matplotlib import pyplot as plt
+import pandas as pd
+plt.rcParams["font.family"] = 'NanumBarunGothic'
 
 
+# 아래 경로에서 csv파일을 읽어서 시각화 해보세요
+# 경로: "./data/WorldCups.csv"
+df = pd.read_csv("WorldCups.csv")    # 월드컵 정보를 담는 csv 파일을 읽어옵니다.
+                                            # 어떤 자료를 갖는지 직접 확인해보세요!
+# print(df)
+
+winners = df["Winner"]          # 읽어온 데이터 프레임 중 "우승국"을 의미하는 칼럼을 가져오세요.
+
+# 국가 별 우승 횟수를 나타내는 딕셔너리 입니다.
+winner_dict = {}
 
 
+for i in winners :          # 우승국을 반복문으로 읽으며, 해당 국가의 우승 횟수를 1씩 증가시킵니다.
+    if i in winner_dict :
+        winner_dict[i] = winner_dict[i] + 1
+        # i(우승국)이 이미 winner_dict에 있다면, value를 1 증가시킵니다.
+    else :
+        winner_dict[i] = 1
+        # i(우승국)이 winner_dict에 최초로 등장한다면, value를 1로 설정합니다.
 
+print(winner_dict)
 
+X = list(winner_dict.keys())      # X축 변수, 즉 우승국을 나타냅니다.
+Y = list(winner_dict.values())    # Y축 변수, 즉 우승 횟수를 나타냅니다.
 
+fig, ax = plt.subplots(figsize=(8, 8))
 
+# ax.plot(X, Y)
+
+ax.bar(X, Y)
+
+ax.set_xlabel("Country")
+ax.set_ylabel("Number")
+
+ax.set_xticks(X)
+
+plt.show()
+```
 
 
 
