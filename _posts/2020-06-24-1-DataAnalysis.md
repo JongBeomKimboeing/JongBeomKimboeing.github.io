@@ -9,7 +9,8 @@ categories: [Numpy]
 # Numpy
 
 ## 1. numpy 란 무엇인가?
-Numerical Python의 약자로 python에서 대규모 다차원 배열을 다룰 수 있게 도와주는 라이브러리
+Numerical Python의 약자로 python에서 <br>
+대규모 다차원 배열을 다룰 수 있게 도와주는 라이브러리
 
 <pre><font size="12px">
 데이터의 대부분은 숫자 배열로 이루어져 있다.
