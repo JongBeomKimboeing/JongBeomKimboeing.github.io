@@ -24,7 +24,7 @@ categories: [Data Crolling]
 <br>
 
 # 3. Beautifulsoup
-<pre><font="4px">
+<pre><font size="3px">
 Beautifulsoup: HTML. XML, JSON등 파일의 구문을 분석하는 모듈
                주로 웹페이지를 표현하는 HTML을 분석하기 위해 사용됨.
 </font></pre>
