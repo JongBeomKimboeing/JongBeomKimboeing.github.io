@@ -162,6 +162,8 @@ print(result.text) #만약 요청이 성공했다면 text로 해당 웹사이트
 **tip 2. 검색을 원하는 요소에 오른쪽 마우스를 클릭하고 '검사'를 눌러 개발자 도구를 켤 수도 있다.**
 **tip 3. find를 통헤 태그에 접근할 때 최대한 해당 태그에 바로 접근할 수 있게 태그를 설정해주는것이 좋다.*** 
 
+<br>
+
 ## 1) 네이버 헤드뉴스 크롤링
 **find_all()이후에 get_text()를 하면 안됨.** <br>
 왜냐하면, find_all이 list를 반환해서 find-all.get_text()를 하면 html에서 get_text가 아닌 list에서 하는 것 이므로 <br>
@@ -194,6 +196,9 @@ if __name__ == "__main__" :
     main()
 ```
 
+
+<br>
+
 ## 2) 연합뉴스 속보 크롤링
 
 ```python
@@ -221,6 +226,8 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+<br>
 
 ## 3) bugs 음원 차트 크롤링
 
@@ -257,6 +264,8 @@ if __name__ == "__main__":
     main()
 ```
 
+<br>
+
 ## 4) 네이버 영화 평가 크롤링
 
 ```python
@@ -285,6 +294,8 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+<br>
 
 ## 5) 커뮤니티 사이트에서 댓글 크로링
 ```python
@@ -328,6 +339,9 @@ if __name__ == "__main__":
 한 뉴스 웹사이트는 각 페이지의 URL에서 'p=(숫자)' 부분이 20씩 증가하고 있는 규칙이 있다.<br>
 이 사이트에서 여러 페이지를 크롤링하려면 어떻게 해야 할까?
 
+
+<br>
+
 ### 1)) 쉬운 방법
 쉬운 방법으로는 URL을 문자열 연산으로 처리하여 새로운 URL을 얻는 것이다. <br>
 ex) <br>
@@ -336,6 +350,9 @@ ex) <br>
 for i in range(0,5):
     url = "http://www.naver.com/Enter?p="+str((i*20+1))
 ```
+
+
+<br>
 
 ### 2)) Query를 이용한 더 효과적인 방법
 ->URL의 query를 이용하면 이 작업을 더 효과적으로 할 수 있다. <br>
@@ -357,6 +374,9 @@ ex) https://www.google.com/search?q=elice <br>
 ex) https://movie.naver.com/movie/bi/mi/basic.nhn?code=168058<br>
 네이버 영화 서비스에서 특정 영화를 클릭하면, code라는 변수에 영화 코드가 담겨 해당 영화에 대한 정보를 보여준다.(여기서는 168058) <br>
 
+
+<br>
+
 ## 2) request 라이브러리 사용하여 쿼리 지정
 request의 get 메소드로 GET 요청을 보낼 때 params 매개변수에 딕셔너리를 전달함으로서 쿼리를 지정할 수 있다.
 
@@ -365,6 +385,11 @@ import requests
 url = "https://www.google.com/search"
 result = requests.get(url, params={'q':'elice'})
 ```
+
+
+<br>
+
+
 ### cf) requests.get() 연속으로 하기
 전체 영화 데이터에서 영화 코드에 대한 정보를 크롤링을 이용해서 찾고<br>
 찾은 영화 코드를 다시 request를 이용하여 특정 영화에 대한 정보를 얻는 요청을 할 수 있다.<br>
@@ -411,6 +436,9 @@ print(div['class']) #div 태그 안에 있는 class가 어떤 class인지 출력
 
 ```
 
+
+<br>
+
 ## 1) href 속성
 - a 태그는 하이퍼링크를 걸어주는 태그로써 이동할 URL을 href속성에 담고있다.
 ```html
@@ -428,7 +456,12 @@ a = soup.find("a")
 href_url = a["href"]
 ```
 
+<br>
+
 ## 2) children, name (html태그의 속성)
+
+
+<br>
 
 ### 1)) children
 
@@ -457,6 +490,9 @@ soup.find("div").children
 ```
 위의 코드는 어떤 div 태그를 찾고, 그 div 태그에 포함된 태그들의 리스트를 얻는 코드이다.<br>
 위 코드를 통해 span,p,img 태그를 갖는 리스트를 얻을 수 있다.<br>
+
+
+<br>
 
 ### 2)) name
 
@@ -1323,6 +1359,9 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+
+<br>
 
 ## 4) mecab을 이용하여 형태소 추출을 해낸다.
 
