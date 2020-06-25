@@ -14,12 +14,13 @@ categories: [Data Crolling]
 
 <br>
 <br>
+<br>
 
 # 2. 크롤링을 위해 필요한 것
 웹페이지의 HTML을 얻기 위해 request 라이브러리를 이용하고<br>
 가져온 HTML을 분석하기 위해 BeutifulSoup 라이브러리를 사용한다.
 
-
+<br>
 <br>
 <br>
 
@@ -125,6 +126,7 @@ soup.find("div", id="elicd")
 
 <br>
 <br>
+<br>
 
 # 4. requests 라이브러리
 requests 라이브러리: python에서 http요청을 보낼 수 있는 모듈이다.
@@ -148,6 +150,10 @@ print(result.status_code) #status_code로 요청의 결과를 알 수 있다.
 print(result.text) #만약 요청이 성공했다면 text로 해당 웹사이트의 HTML을 얻을 수 있다.
 #전에 만든 requests와 BeutifulSoup를 조합하여 웹페이지의 HTML을 분석할 수 있다.
 ```
+
+<br>
+<br>
+<br>
 
 # 5. 실전 크롤링
 
@@ -314,6 +320,7 @@ if __name__ == "__main__":
 
 <br>
 <br>
+<br>
 
 # 6. 여러페이지 크롤링하기
 
@@ -374,41 +381,374 @@ code = ...
 result = requests.get(url, params= {'movie':code})
 ```
 
+<br>
+<br>
+<br>
+
 # 7. 태그와 속성
 HTML에는 여러 종류의 태그와, 태그에 특정 기능이나 유형을 적용하는 속성이 있다.<br>
 
 <br>
 
 ex) <br>
+div는 태그, class와 id를 속성이라고 한다.
+```html
 <div class="elice" id="title">제목</div> <br>
+```
+
+- 어떤 태그의 속성이 무엇이 있는지 확인할 때는 attrs 멤버변수를 출력한다.
+
+```python
+div = soup.find("div") #find를 이용해 tag를 찾는다
+print(div.attrs) #찾은 tag에 속성이 무엇이 있는지 확인 할 때는 attrs를 이용한다.
+```
+
+- attrs 딕셔너리의 키로 인덱싱하여, 태그의 속성에 접근할 수 있다.
+
+```python
+
+print(div['class']) #div 태그 안에 있는 class가 어떤 class인지 출력한다.
+
+```
+
+## 1) href 속성
+- a 태그는 하이퍼링크를 걸어주는 태그로써 이동할 URL을 href속성에 담고있다.
+```html
+
+<a href="https...">기사 제목</a>
+
+```
+그러므로 어떠한 요소들 중 a라는 태그를 찾고 해당 a 태그의 href라는 속성을 얻음으로써 새로운 페이지의 url을 얻을 수 있다.
+
+<br>
+
+- 아래와 같이 href 속성을 이용하여 웹페이지에 존재하는 하이퍼링크의 URL을 얻을 수 있다.
+```python
+a = soup.find("a")
+href_url = a["href"]
+```
+
+## 2) children, name (html태그의 속성)
+
+### 1)) children
+
+웹사이트의 구조가 복잡한 경우 다양한 옵션을 적용해서 html태그를 검색할 수도 있다.<br>
+이때 children이라는 속성은 어떤 태그가 포함하고 있는 태그이다.<br>
+
+<br>
+
+ex)<br>
+div안에 여러 요소들이 있다면 각각의 요소를 children이라고 한다.
+
+```html
+<div>
+    <span>span1</span>
+    <span>span1</span>
+    <p>p tag</p>
+    <img ... />
+</div>
+```
+위의 div태그는 span,p,img 태그들을 갖고 있다.<br>
+beautifulsoup의 children 속성으로 어떤 태그가 포함하고 있는 태그들도 조회할 수 있다.<br>
+
+```python
+
+soup.find("div").children
+```
+위의 코드는 어떤 div 태그를 찾고, 그 div 태그에 포함된 태그들의 리스트를 얻는 코드이다.<br>
+위 코드를 통해 span,p,img 태그를 갖는 리스트를 얻을 수 있다.<br>
+
+### 2)) name
+
+name은 어떤 태그의 이름을 의미하는 속성이다.<br>
+
+ex)<br>
+div, span -> name이라는 속성은 div가 갖고 있는 여러가지 children이 각각 어떤 태그인 지 알 때 유용<br>
+
+```html
+<div>
+    <span>span1</span>
+    <span>span1</span>
+    <p>p tag</p>
+    <img ... />
+</div>
+```
+어떤 태그의 이름을 알고 싶다면 name속성을 이용할 수 있다.<br>
+태그가 존재하지 않는 경우 None 값을 얻는다.
+
+```python
+children = soup.find("div").children
+for child in children:
+    print(child.name)
+```
+결과: span,span,p,img가 각각 출력된다.
+
+<br>
+<br>
+<br>
+
+
+# 8. 실전 크롤링
+
+## 1) 여러 페이지의 기사 제목 수집하기
+
+- Query 사용을 중심으로 
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+
+def crawling(soup):
+    # soup 객체에서 추출해야 하는 정보를 찾고 반환하세요.
+    list =[]
+    soup = soup.find("div", class_="sub_content").find_all("span", class_="tit")
+    for data in soup:
+        list.append(data.get_text())
+
+    return list
+
+
+def main():
+    answer = []
+    url = "https://sports.donga.com/ent"
+
+    for i in range(0, 5):
+        req =  requests.get(url, params={'p':(20*i+1)}) # requests.get 메소드를 호출해보세요.
+        soup = BeautifulSoup(req.text, "html.parser")
+        answer += crawling(soup)
+    # crawling 함수의 결과를 출력합니다.
+    print(answer)
+if __name__ == "__main__":
+    main()
+
+```
+
+## 2) 각 기사의 href 수집하기
+
+- href 속성 가져오는 것을 중심으로 보기
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+def get_href(soup) :
+    href_list = []
+    # soup에 저장되어 있는 각 기사에 접근할 수 있는 href들을 담고 있는 리스트를 반환해주세요.
+    a = soup.find("ul", class_="list_news").find_all('span',class_="tit")
+    for data in a:
+        href_list.append(data.find("a")["href"])
+    return href_list
+
+def main():
+    list_href = []
+
+    url = "https://sports.donga.com/ent?p=1&c=02"
+    result = requests.get(url)
+    soup = BeautifulSoup(result.text, "html.parser")
+    list_href = get_href(soup)
+    print(list_href)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+## 3) 네이버 최신뉴스 href 수집하기
+
+- find 를 이용해 div의 class 속성을 찾아줄 때는 최대한 안 쪽 클래스로 설정해준다.
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+def get_href(soup):
+    list =[]
+    # 각 기사에 접근할 수 있는 href를 리스트로 반환하세요.
+    data = soup.find_all("div", class_="mlt01") #최대한 안 쪽 클래스로 설정해준다.
+    for link in data:
+        list.append("https:"+link.find("a")["href"])
+    return list
+
+def main():
+    list_href = []
+
+    # href 수집할 사이트 주소 입력
+    url = "https://news.nate.com/recent?mid=n0100"
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    list_href = get_href(soup)
+
+    print(list_href)
+
+if __name__ == "__main__":
+    main()
+```
+
+## 4) 다양한 섹션의 속보기사 href 추출하기
+
+- dictionary 로 Query를 적용한 부분을 중심으로
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+
+def get_href(soup):
+    list_link =[]
+    # 각 분야별 속보 기사에 접근할 수 있는 href를 리스트로 반환하세요.
+    resultsoup = soup.find("ul", class_="type06_headline").find_all("a")
+    for data in resultsoup:
+        list_link.append(data['href'])
+    return list_link
+
+#----------------------------------------------------------------------------------
+def get_request(section):
+    # 입력된 분야에 맞는 request 객체를 반환하세요.
+    # 아래 url에 쿼리를 적용한 것을 반환합니다.
+    sec_dict = {"정치":100, "경제":101, "사회":102, "생활":103, "세계":104, "과학":105}
+    url = "https://news.naver.com/main/list.nhn"
+    result = requests.get(url,params={'sid1':sec_dict[section]})
+    return result
+#----------------------------------------------------------------------------------
+
+def main():
+    list_href = []
+
+    # 섹션을 입력하세요.
+    section = input('"정치", "경제", "사회", "생활", "세계", "과학" 중 하나를 입력하세요.\n  > ')
+
+    req = get_request(section)
+    soup = BeautifulSoup(req.text, "html.parser")
+    list_href = get_href(soup)
+    print(list_href)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+
+## 5) 다양한 섹션의 속보 기사 내용 추출하기
+
+- Naver 신문에서의 기사는 "div",id="articleBodyContents" 부분에 있는데, div의 children 속성 없는 곳에 기사가 적혀있다.
+- def crawling(soup): 을 중심으로 보자.
+
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+
+def crawling(soup):
+    # 기사에서 내용을 추출하고 반환하세요.
+    children = soup.find("div",id="articleBodyContents").children
+    article = soup.find("div",id="articleBodyContents")
+    for child in children:
+        if child.name == None:
+            list_ch = article.get_text().replace("\n","").replace('// flash 오류를 우회하기 위한 함수 추가function _flash_removeCallback() {}',"").replace("\t","")
+    return list_ch
+
+
+def get_href(soup):
+    # 각 분야별 속보 기사에 접근할 수 있는 href를 리스트로 반환하세요.
+    links=[]
+    link_result = soup.find("ul","type06_headline").find_all("a")
+    for link in link_result:
+        links.append(link['href'])
+    return links
+
+
+def get_request(section):
+    # 입력된 분야에 맞는 request 객체를 반환하세요.
+    # 아래 url에 쿼리를 적용한 것을 반환합니다.
+    sec_dict = {"정치":100, "경제":101, "사회":102, "생활":103, "세계":104, "과학":105}
+    url = "https://news.naver.com/main/list.nhn"
+    result = requests.get(url,params={'sid1':sec_dict[section]})
+    return result
+
+
+def main():
+    list_href = []
+    result = []
+
+    # 섹션을 입력하세요.
+    section = input('"정치", "경제", "사회", "생활", "세계", "과학" 중 하나를 입력하세요.\n  > ')
+
+    req = get_request(section)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    list_href = get_href(soup)
+    print(list_href)
+
+    for href in list_href:
+        href_req = requests.get(href)
+        href_soup = BeautifulSoup(href_req.text, "html.parser")
+        result.append(crawling(href_soup))
+    print(result)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+## 6) 특정 영화 제목을 입력하면 영화제목 가져오기
+
+- 문자열 사이에 변수를 넣기 위해서는 문자열 다온표 앞에 f를 붙인 다음 {}를 이용하여 변수이름을 적어주면 된다.
+(def get_url(movie): 을 중심으로 보자.)
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+
+def crawling(soup):
+    # soup 객체에서 추출해야 하는 정보를 찾고 반환하세요.
+    # 1장 실습의 영화 리뷰 추출 방식과 동일합니다.
+    reply_list =[]
+    reply = soup.find("ul",class_="rvw_list_area").find_all("strong")
+    for replys in reply:
+        reply_list.append(replys.get_text().replace("\t","").replace("\n","").replace("\r",""))
+    return reply_list
+
+
+def get_href(soup):
+    # 검색 결과, 가장 위에 있는 영화로 접근할 수 있는 href를 반환하세요.
+    result = soup.find("ul",class_="search_list_1").find("li").find("a")
+    return "https://movie.naver.com"+result['href'].replace("basic","review")
+
+
+def get_url(movie):
+    # 입력된 영화를 검색한 결과의 url을 반환하세요.
+    mreq = f"https://movie.naver.com/movie/search/result.nhn?query={movie}&section=all&ie=utf8"
+    #문자열 사이에 변수를 넣기 위해서는 문자열 다온표 앞에 f를 붙인 다음 {}를 이용하여 변수이름을 적어주면 된다.
+    return mreq
+
+
+def main():
+    list_href = []
+
+    # 섹션을 입력하세요.
+    movie = input('영화 제목을 입력하세요. \n  > ')
+
+    url = get_url(movie)
+
+    req = requests.get(url)
+
+    soup = BeautifulSoup(req.text, "html.parser")
+    movie_url = get_href(soup)
+    print(movie_url)
+    href_req = requests.get(movie_url)
+    href_soup = BeautifulSoup(href_req.text, "html.parser")
+    print(crawling(href_soup))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    main()
+```
 
 
 
