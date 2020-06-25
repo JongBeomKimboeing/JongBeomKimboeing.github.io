@@ -490,6 +490,8 @@ for child in children:
 
 # 8. 실전 크롤링
 
+<br>
+
 ## 1) 여러 페이지의 기사 제목 수집하기
 
 - Query 사용을 중심으로 
@@ -524,6 +526,8 @@ if __name__ == "__main__":
 
 ```
 
+<br>
+
 ## 2) 각 기사의 href 수집하기
 
 - href 속성 가져오는 것을 중심으로 보기
@@ -554,6 +558,8 @@ if __name__ == "__main__":
     main()
 
 ```
+
+<br>
 
 ## 3) 네이버 최신뉴스 href 수집하기
 
@@ -586,6 +592,8 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+<br>
 
 ## 4) 다양한 섹션의 속보기사 href 추출하기
 
@@ -630,6 +638,7 @@ if __name__ == "__main__":
     main()
 ```
 
+<br>
 
 ## 5) 다양한 섹션의 속보 기사 내용 추출하기
 
@@ -694,9 +703,11 @@ if __name__ == "__main__":
     main()
 ```
 
+<br>
+
 ## 6) 특정 영화 제목을 입력하면 영화제목 가져오기
 
-- 문자열 사이에 변수를 넣기 위해서는 문자열 다온표 앞에 f를 붙인 다음 {}를 이용하여 변수이름을 적어주면 된다.
+- 문자열 사이에 변수를 넣기 위해서는 문자열 다온표 앞에 f를 붙인 다음 {}를 이용하여 변수이름을 적어주면 된다.<>
 (def get_url(movie): 을 중심으로 보자.)
 
 ```python
@@ -750,45 +761,971 @@ if __name__ == "__main__":
     main()
 ```
 
+<br>
+<br>
+<br>
+
+# 9. API
+## 1) API의 정의
+
+<pre>
+API(Application Programming Interface)는
+어떤 프로그램과 또 다른 프로그램을 연결해주는 매개체이다.
+사람이 컴퓨터를 다루기 위해 마우스와 키보드를 이용하는 것처럼,
+API는 프로그램 사이를 연결해주는 역할을 한다.
+
+ex) 지도 데이터를 이용하여 맛집 찾기 웹 서비스를 제작하려면 어떻게 할까?(지도 데이터와 웹서비스가 연결 해 줄 매개체가 없다)
+
+    보통의 일반인들에게는 지도 데이터를 갖고 있지 않고, 이를 수집하는 것도 매우 어렵다.
+    그렇다고 공개된 데이터를 그대로 사용하는 것도 어렵다.(호환성 문제, 만들고자하는 프로그램과 맞는 데이터가 없을 수 있다.)
+
+    만약, google이 갖고 있는 지도 데이터를 공개하였다고 가정하자.
+    그러나 구글지도 원본 데이터는 너무 방대하기도 하고, 호환성 등의 문제도 있어 쉽게 사용할 수 없다.
+    그래서 google은 지도 데이터를 응용하여 사용할 수 있도록 google map API라는 매개체를 사용자들에게 제공한다.
+    
+    
+    
+    
+daum 증권 사이트의 경우 여러 기업들의 주가 정보를 API를 거쳐 받아온 후 표시한다.
+daum 증권 사이트와 같이 API를 이용하여 정보를 가져오는 웹사이트가 꽤 많다.
+이런 경우 정보가 HTML에 처음부터 존재하지 않고, 정보를 API로부터 불러오고 나서 HTML에 존재하게 된다.
+그러므로, daum 증권 사이트에서는 BeautifulSoup를 이용하여 주가 데이터를 크롤링할 수 없다.
+왜냐하면 웹 사이트를 처음 로드할 때 HTML문서에는 주가 데이터가 존재하지 않기 때문이다.
+
+
+보통 API를 이용하여 데이터를 불러오는 경우는 데이터가 '동적'으로 변화하는 일이 많아
+실시간으로 값을 불러와야 하는 경우이다. (기업의 주가도 한 예시이다.)
+
+이럴 땐 daum 증권 사이트에서 주가 정보를 요청하는 API에 접근하여 어떤 정보를 전달해주고 있는지 접근하면 된다.
+
+
+</pre>
+
+<br>
+
+## 2) API 데이터 가져오는 방법
+
+<pre>
+
+크롬 개발자 도구(F12)의 Network 탭에서 웹사이트가 데이터를 요청하는 API를 볼 수 있다.
+(즉,네트워크를 통해서 외부 API에서 주가 데이터를 받아와서 웹페이지에 표시를 함)
+
+API의 URL에 GET 요청을 보내면 JSON 데이터를 얻을 수 있다.
+JSON은 key와 value를 저장하는, 딕셔너리 꼴의 데이터 형식이다.
+
+몇몇 웹사이트들은 크롤러 등을 통한 기계적인 접근을 막고 있다.
+이를 우회하기 위해 requests.get 메소드에 "headers" 매개변수를 지정해주어야 한다.
+
+cf) header: http 상에서 클라이언트와 서버가 요청 또는 응답을 보낼 때 전송하는 부가적인 정보를 의미한다.
+            실습에서 headers에 사용할 옵션을 제공하고 있다.
+
+ex) custom_header = {
+        'referer': ... (referer: 사용자가 해당 웹사이트에 접근할 때 이전 웹 페이지의 주소를 의미한다.)
+        'user-agent': ... }(user-agent: 이용자의 여러가지 사양(브라우저, os)을 의미한다.)
+    이렇게 custom_header를 만들어서 request가 get요청을 보낼 때 url과 함께 header 데이터도 같이 보낸다.
+
+</pre>
+
+<br>
+<br>
+<br>
+
+## 3) API를 이용한 실전 크롤링
+
+<br>
+
+### 1)) daum 증권 페이지에서 주가 크롤링
+
+- def get_data(json_obj): 와 def get_json(): 를 중심으로 보자.
+
+```python
+import requests
+import json
+
+custom_header = {
+    'referer': 'http://http://finance.daum.net/quotes/A048410#home',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'}
+
+
+def get_data(json_obj):
+    # 튜플들을 담고 있는 리스트를 반환해야 합니다.
+    # 하나의 튜플은 한 기업의 (rank, name, tradeprice)를 담고 있어야 합니다.
+    result = []
+    for d in json_obj['data']:
+        result.append((d['rank'], d['name'], d['tradePrice']))
+        # API에 접속에 성공하였다면 json_obj 변수에 결과를 저장하세요.
+    return result
+
+
+def get_json():
+    json_obj = None# 반환할 json 파일을 담는 변수입니다.
+    url = "http://finance.daum.net/api/search/ranks?limit=10"  # 상위 10개 기업의 정보가 담긴 json 파일을 얻는 API url을 작성하세요.
+
+    req = requests.get(url, headers=custom_header)
+
+    if req.status_code == requests.codes.ok:
+        print("접속 성공")
+        #print(req.text) #request한 데이터를 출력
+        json_obj = json.loads(req.text) #json 파일을 파이썬 코드에서 불러오기 위해 파이썬의 json모듈을 사용할 수 있다.
+        #json.loads는 json 데이터를 로드하는 데 쓰인다.(핵심)
+        #print(stock_data)
+    else:
+        print("접속 실패")
+
+    return json_obj
+
+
+def main():
+    json_obj = get_json()
+    data = get_data(json_obj)
+
+    for d in data:
+        print(d)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+<br>
+
+### 2)) 네이버 실시간 검색어 크롤링 (get_keyword_ranking함수를 이용하여 연관검색어 반환)
+
+- def get_keyword_ranking(json_obj): 와 def get_data(json_obj, keyword_rank): 를 중심으로 보자
+
+```python
+import requests
+import json
+
+custom_header = {
+    'referer': 'https://www.naver.com/',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'}
+
+def get_keyword_ranking(json_obj):
+    key_rank=[]
+    for data in json_obj['data']:
+        key_rank.append(data['keyword_synonyms'])
+    return key_rank
+
+def get_data(json_obj, keyword_rank):
+    # 튜플들을 담고 있는 리스트를 반환해야 합니다.
+    # 하나의 튜플은 한 키워드의 (rank, keyword, keyword_synonyms)를 담고 있어야 합니다.
+    result = []
+    for data, key in zip(json_obj['data'], keyword_rank): #zip 이용하여 두 데이터 묶어주기
+        result.append((data['rank'], data['keyword'],key))
+    return result
+
+
+def get_json():
+    json_obj = None
+    url = "https://apis.naver.com/mobile_main/srchrank/srchrank?frm=main&ag=20s&gr=2&ma=-2&si=1&en=-2&sp=-2"
+    req = requests.get(url, headers=custom_header)
+
+    if req.status_code == requests.codes.ok:
+        print("접속 성공")
+        json_obj = json.loads(req.text)
+        # API에 접속에 성공하였다면 json_obj 변수에 결과를 저장하세요.
+
+    else:
+        print("Error code")
+
+    return json_obj
+
+
+def main():
+    json_obj = get_json()
+    keyword_rank = get_keyword_ranking(json_obj)
+    result = get_data(json_obj, keyword_rank)
+
+    for rank, keyword, synonyms in result:
+        if synonyms:
+            print(f"{rank}번째 검색어 : {keyword}, 연관검색어 : {synonyms}")
+        else:
+            print(f"{rank}번째 검색어 : {keyword}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+
+### 3)) 네이버 실시간 검색어 크롤링(get_keyword_ranking함수 없이)
+
+- 위의 def get_keyword_ranking(json_obj): 없이도 크롤링 가능하다.
+
+```python
+import requests
+import json
+
+custom_header = {
+    'referer': 'https://www.naver.com/',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'}
+
+
+def get_data(json_obj):
+    # 튜플들을 담고 있는 리스트를 반환해야 합니다.
+    # 하나의 튜플은 한 키워드의 (rank, keyword, keyword_synonyms)를 담고 있어야 합니다.
+    result = []
+    for data in json_obj['data']:
+        result.append((data['rank'], data['keyword'],data['keyword_synonyms']))
+    return result
+
+
+def get_json():
+    json_obj = None
+    url = "https://apis.naver.com/mobile_main/srchrank/srchrank?frm=main&ag=20s&gr=2&ma=-2&si=1&en=-2&sp=-2"
+    req = requests.get(url, headers=custom_header)
+
+    if req.status_code == requests.codes.ok:
+        print("접속 성공")
+        json_obj = json.loads(req.text)
+        # API에 접속에 성공하였다면 json_obj 변수에 결과를 저장하세요.
+
+    else:
+        print("Error code")
+
+    return json_obj
+
+
+def main():
+    json_obj = get_json()
+    result = get_data(json_obj)
+
+    for rank, keyword, synonyms in result:
+        if synonyms:
+            print(f"{rank}번째 검색어 : {keyword}, 연관검색어 : {synonyms}")
+        else:
+            print(f"{rank}번째 검색어 : {keyword}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+
+### 4)) 음식점 리뷰 크롤링
+
+```python
+from bs4 import BeautifulSoup
+import requests
+import json
+
+custom_header = {
+    'referer': 'https://www.mangoplate.com',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'}
+
+
+def get_data(json_obj):
+    # json_obj에 들어있는 댓글 텍스트를 담고 있는 리스트를 반환해야 합니다.
+    result = []
+    for data in json_obj:
+        comment = data["comment"]  # comment 딕셔너리에 comment가 들어있다.
+        text = comment["comment"]
+        result.append(text)
+    return result
+
+
+def get_json(href, i):
+    json_obj = None
+    url = f"https://stage.mangoplate.com/api/v5{href}/reviews.json?language=kor&device_uuid=V3QHS15862342340433605ldDed&device_type=web&start_index={i}&request_count=50&sort_by=2"
+
+    req = requests.get(url, headers=custom_header)
+
+    if req.status_code == requests.codes.ok:
+        print("접속 성공")
+        json_obj = json.loads(req.text)
+
+        # API에 접속에 성공하였다면 json_obj 변수에 결과를 저장하세요.
+
+    else:
+        print("Error code")
+
+    return json_obj
+
+
+def main():
+    href = "/restaurants/iMRRP69qtkeO"  # 크롤링할 음식점의 고유 번호입니다.
+    comments = []  # 음식점의 모든 댓글이 담길 리스트입니다.
+    i = 0
+
+    # 댓글을 모두 크롤링할 때 까지 계속 반복합니다.
+    while True:
+        json_obj = get_json(href, i)
+        new_data = get_data(json_obj)
+
+        if len(new_data) == 0:
+            break
+
+        comments += new_data
+
+        i += 50
+
+    print(comments)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+
+### 5)) 음식점 href 크롤링
+
+```python
+from bs4 import BeautifulSoup
+import requests
+import json  # json import하기
+
+custom_header = {
+    'referer': 'https://www.mangoplate.com/',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'}
+
+
+def get_restaurants(name):
+    # 검색어 name이 들어왔을 때 검색 결과로 나타나는 식당들을 리스트에 담아 반환하세요.
+    restuarant_list = []
+    url = f"https://www.mangoplate.com/search/{name}"
+    req = requests.get(url, headers = custom_header)
+    soup = BeautifulSoup(req.text,"html.parser")
+    rdatas = soup.find_all("div",class_="list-restaurant-item")
+
+    for rdata in rdatas:
+        info = rdata.find("div", class_="info")
+        link = info.find("")['href']
+        names = info.find("h2", class_="title").get_text().replace("\n","").replace(" ","")
+        restuarant_list.append([names,link])
+
+
+    return restuarant_list
+
+
+def main():
+    name = input()
+    restuarant_list = get_restaurants(name)
+    print(restuarant_list)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+
+### 6)) 검색 결과 음식점 리뷰 크롤링
+
+- JSON으로 저장된 데이터에서 댓글을 추출하는 부분을 중심으로 (def get_reviews(code): )
+
+```python
+from bs4 import BeautifulSoup
+import requests
+import json  # json import하기
+
+custom_header = {
+    'referer': 'https://www.mangoplate.com/',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'}
+
+
+def get_reviews(code):
+    comments = []
+    url = f"https://stage.mangoplate.com/api/v5{code}/reviews.json?language=kor&device_uuid=V3QHS15862342340433605ldDed&device_type=web&start_index=0&request_count=5&sort_by=2"
+    req = requests.get(url, headers=custom_header)
+    json_obj = json.loads(req.text)
+
+    if req.status_code == requests.codes.ok:
+        print("접속 성공")
+        for json_c in json_obj:
+            comments.append(json_c["comment"]["comment"].replace("\n", ""))
+    return comments
+    # req에 데이터를 불러온 결과가 저장되어 있습니다.
+    # JSON으로 저장된 데이터에서 댓글을 추출하여 comments에 저장하고 반환하세요.
+
+
+def get_restaurants(name):
+    name_links =[]
+    url = f"https://www.mangoplate.com/search/{name}"
+    req = requests.get(url, headers=custom_header)
+    soup = BeautifulSoup(req.text, "html.parser")
+    name_link = soup.find_all("div",class_="list-restaurant-item")
+    for links in name_link:
+        info = links.find("div",class_="info")
+        names = info.find("h2",class_="title").get_text().replace("\n","").replace(" ","")
+        link = info.find("a")["href"]
+        name_links.append((names, link))
+    return name_links
+    # soup에는 특정 키워드로 검색한 결과의 HTML이 담겨 있습니다.
+    # 특정 키워드와 관련된 음식점의 이름과 href를 튜플로 저장하고,
+    # 이름과 href를 담은 튜플들이 담긴 리스트를 반환하세요.
+
+
+def main():
+    name = input("검색어를 입력하세요 : ")
+
+    restuarant_list = get_restaurants(name)
+
+    for r in restuarant_list:
+        print(r[0])
+        print(get_reviews(r[1]))
+        print("=" * 30)
+        print("\n" * 2)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+<br>
+<br>
+
+# 10. 워드 클라우드
+
+<pre>
+1. 워드클라우드의 정의
+   -> 워드클라우드란, 데이터에서 단어 빈도를 분석하여 시각화하는 기법이다.
+   
+2. 워드클라우드 준비
+   -> 워드클라우드를 그리기 위해서 텍스트 데어터가 필요하다.
+   
+3. 영어 문장 나누기
+   ->워드클라우드의 각 단어는 빈도에 따라 크기가 결정된다.
+   크기가 큰 단어일수록 빈도가 놓다.
+   영어 문장의 경우, 공백을 기준으로 나누어 각각의 단어를 얻을 수 있다.
+   (한국어의 경우 조사가 있어서 공백으로 나눈다고 해도 올바르게 단어를 구분할 수 없다.)
+
+</pre>
+
+<br>
+
+## 1) 영어 문장 나누기
+
+- 주석을 따라가 보자.
+
+```python
+from collections import Counter # Counter: 주어진 리스트에서 특정 값이 몇 번 등장하는지 세는 역할을 한다.
+from string import punctuation # punctuation(특수문자들이 담긴 문자열): 문자열 데이터에서 특수문자를 제거하기위해 사용한다.
+from text import data
+
+def count_word_freq(data):
+    _data = data.lower() # 문자열들을 모두 소문자로 바꾸어 전처리한다.
+    for p in punctuation: # 문자열에 들어있는 특수문자를 모두 제거한다.
+#                           paunctuation은 특수문자들이 담겨있는 문자열 변수이다.
+        _data = _data.replace("p","")
+    _data = _data.split() # 공백을 기준으로 데이터 나누기
+    counter = Counter(_data) # 단어 count하기
+    return counter
+
+if __name__ == "__main__":
+    print(count_word_freq(data))
+```
+
+<br>
+
+## 2) 워드클라우드 출력하기
+
+- def create_word_cloud(data): 를 중심으로 보기
+
+```python
+from wordcloud import WordCloud
+from string import punctuation
+from collections import Counter
+from text import data
+import matplotlib.pyplot as plt
+
+def count_word_freq(data):
+    _data = data.lower() # 문자열들을 모두 소문자로 바꾸어 전처리한다.
+    for p in punctuation: # 문자열에 들어있는 특수문자를 모두 제거한다.
+#                           paunctuation은 특수문자들이 담겨있는 문자열 변수이다.
+        _data = _data.replace("p","")
+    _data = _data.split() # 공백을 기준으로 데이터 나누기
+    counter = Counter(_data) # 단어 count하기
+    return counter
+
+def create_word_cloud(data):
+    counter = count_word_freq(data)
+    cloud = WordCloud(background_color='white') #배경이 흰색인 wordcloud 객체 생성
+    cloud.fit_words(counter) #단어들의 횟수를 기반으로 워드클라우드 생성
+    plt.imshow(cloud)
+    plt.show()
+    # 코드를 작성하세요.
+
+    return None
+
+
+if __name__ == "__main__":
+    create_word_cloud(data)
+```
+
+<br>
+<br>
+
+<pre>
+이전 실습의 문제점
+이전 실습에서 그렸던 워드클라우드의 문제점은 단어에 어미와 조사가 붙어 분석이 왜곡되는 것이다.
+ex) '대통령이'와 '대통령은'은 둘 다 대통령이라는 공통된 키워드로 집계되어야 한다.
+이를 추출하기 위해 한국어 단어에 붙는 어미와 조사를 제거하고, 단어의 어근만 집계되도록 하는 형태소 추출 과정이 필요하다.
+</pre>
+
+<br>
+
+## 3) 형태소 추출 없이 네이버 기사로 워드클라우드 만들기
+
+- 아래 코드는 형태소 추출을 하지 않았다.
+- 한글을 출력하기 위해서는 NanumBarunGothic.ttf 가 필요하다. (이를 중심으로 보자)
+
+```python
+import requests
+from bs4 import BeautifulSoup
+from wordcloud import WordCloud
+from string import punctuation
+from collections import Counter
+import matplotlib.pyplot as plt
+
+def count_word_freq(text):
+    text = text.lower()
+    for p in punctuation:
+        text = text.replace("p","")
+    text = text.split() # 띄어쓰기 기준으로 단어 나누기
+    counter = Counter(text)
+    return counter
+
+def create_word_cloud(text):
+    counter = count_word_freq(text)
+    cloud = WordCloud(font_path='C:/Users/harry/NanumBarunGothic.ttf',background_color='white')
+    cloud.fit_words(counter)
+    cloud.to_file('cloud.png')
+
+def crawling(soup):
+    # soup 객체에서 추출해야 하는 정보를 찾고 반환하세요.
+    text_list = ""
+    children = soup.find("div",class_="_article_body_contents").children
+    text = soup.find("div",class_="_article_body_contents")
+    for child in children:
+        if child.name == None:
+            text_list += child
+    start = text_list.find("// TV플레이어")
+    text_list = text_list[start + len("// TV플레이어")+1:] #"// TV플레이어"가 적힌 곳 부터 분문 끝까지 추출
+    end = text_list.find("// 본문 내용 ")
+    text_list = text_list[:end]
+    text_list.replace("\n", "").replace('// flash 오류를 우회하기 위한 함수 추가function _flash_removeCallback() {}', '').replace("\t", "")
+    return text_list
+
+def main():
+    url = "https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=100&oid=005&aid=0001328950"
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    text = crawling(soup)
+    create_word_cloud(text)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+## 4) mecab을 이용하여 형태소 추출을 해낸다.
+
+- text = hannanum.nouns(text) 이 코드 한 줄을 이용하면 형태소 추출을 할 수 있다.
+
+```python
+import requests
+from bs4 import BeautifulSoup
+from wordcloud import WordCloud
+from string import punctuation
+from collections import Counter
+import matplotlib.pyplot as plt
+from konlpy.tag import Hannanum
+hannanum = Hannanum()
+
+def count_word_freq(text):
+    text = text.lower()
+    for p in punctuation:
+        text = text.replace("p","")
+    text = hannanum.nouns(text)# 띄어쓰기 기준으로 단어 나누기
+    counter = Counter(text)
+    return counter
+
+def create_word_cloud(text):
+    counter = count_word_freq(text)
+    cloud = WordCloud(font_path='C:/Users/harry/NanumBarunGothic.ttf',background_color='white')
+    cloud.fit_words(counter)
+    cloud.to_file('cloud.png')
+
+def crawling(soup):
+    # soup 객체에서 추출해야 하는 정보를 찾고 반환하세요.
+    text_list = ""
+    children = soup.find("div",class_="_article_body_contents").children
+    text = soup.find("div",class_="_article_body_contents")
+    for child in children:
+        if child.name == None:
+            text_list += child
+    start = text_list.find("// TV플레이어")
+    text_list = text_list[start + len("// TV플레이어")+1:] #"// TV플레이어"가 적힌 곳 부터 분문 끝까지 추출
+    end = text_list.find("// 본문 내용 ")
+    text_list = text_list[:end]
+    text_list.replace("\n", "").replace('// flash 오류를 우회하기 위한 함수 추가function _flash_removeCallback() {}', '').replace("\t", "")
+    return text_list
+
+def main():
+    url = "https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=100&oid=005&aid=0001328950"
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    text = crawling(soup)
+    create_word_cloud(text)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+<br>
+<br>
+
+
+# 11. 실전 데이터 크롤링 / 워드클라우드
+- 앞에서 배운 모든 내용을 활용해 실습을 해보자.
+
+<br>
+<br>
+
+
+## 1) 여러 개의 기사 내용 크롤링하기
+
+하나의 기사만으로는 단어의 빈도수를 파악하기 어려울 수 있다. 기사의 분량, 기자의 성향 등 여러 요인이 반영되기 때문이다.<br>
+그러므로, 공통된 주제에 대한 여러 기사의 텍스트 데이터를 같이 분석하면 효과적인 워드클라우드를 출력할 수 있다.  
+
+
+```python
+import requests
+from bs4 import BeautifulSoup
 
 
 
+def crawling(soup):
+    # 기사에서 내용을 추출하고 반환하세요.
+
+    div = soup.find('div', class_="_article_body_contents")
+    result = div.get_text().replace('\n', '').replace('// flash 오류를 우회하기 위한 함수 추가function _flash_removeCallback() {}',
+                                                      '').replace('\t', '')
+
+    return result
 
 
+def get_href(soup):
+    result = []
+    hiper = soup.find_all("div",class_="cluster_text")
+    for links in hiper:
+        result.append(links.find("a")['href'])
+    return result
 
 
+def get_request(section):
+    # 입력된 분야에 맞는 페이지의 URL을 반환합니다.
+    url = "https://news.naver.com/main/main.nhn"
+    section_dict = {"정치": 100,
+                    "경제": 101,
+                    "사회": 102,
+                    "생활": 103,
+                    "세계": 104,
+                    "과학": 105}
+    return requests.get(url, params={"sid1": section_dict[section]})
 
 
+def main():
+    list_href = []
+    result = []
+
+    # 섹션을 입력하세요.
+    section = input('"정치", "경제", "사회", "생활", "세계", "과학" 중 하나를 입력하세요.\n  > ')
+
+    req = get_request(section)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    list_href = get_href(soup)
+
+    for href in list_href:
+        href_req = requests.get(href)
+        href_soup = BeautifulSoup(href_req.text, "html.parser")
+        result.append(crawling(href_soup))
+    print(result)
 
 
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+<br>
+
+## 2) 여러 개의 기사 내용으로 워드클라우드 출력하기
+
+- 형태소 분석을 하고 단어 빈도수를 count 했다.
+- 이를 이용하여 워드클라우드도 출렸했다.
+
+```python
+import requests
+from bs4 import BeautifulSoup
+from collections import Counter
+from string import punctuation
+import mecab
+mecab = mecab.MeCab()
+
+def count_word_freq(data):
+    _data = data.lower()
+
+    for p in punctuation:
+        _data = _data.replace(p, "")
+
+    # 명사 추출
+    _data = mecab.nouns(_data)
+
+    counter = Counter(_data)
+
+    return counter
 
 
+def crawling(soup):
+    result = ""
+    for children in soup.find("div", class_="_article_body_contents").children:
+        if children.name == None:
+            result += children
+
+    start = result.find("// TV플레이어")
+    result = result[start + len("// TV플레이어") + 1:]
+
+    end = result.find("// 본문 내용")
+    result = result[:end]
+
+    return result.replace("\n", "").replace("\t", "")
 
 
+def get_href(soup):
+    result = []
+
+    cluster_body = soup.find("div", class_="cluster_body")
+
+    for cluster_text in cluster_body.find_all("div", class_="cluster_text"):
+        result.append(cluster_text.find("a")["href"])
+
+    return result
 
 
+def get_request(section):
+    url = "https://news.naver.com/main/main.nhn"
+    section_dict = {"정치": 100,
+                    "경제": 101,
+                    "사회": 102,
+                    "생활": 103,
+                    "세계": 104,
+                    "과학": 105}
+    return requests.get(url, params={"sid1": section_dict[section]})
 
 
+def main():
+    list_href = []
+    result = []
+
+    # 섹션을 입력하세요.
+    section = input('"정치", "경제", "사회", "생활", "세계", "과학" 중 하나를 입력하세요.\n  > ')
+
+    req = get_request(section)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    list_href = get_href(soup)
+
+    for href in list_href:
+        href_req = requests.get(href)
+        href_soup = BeautifulSoup(href_req.text, "html.parser")
+        result.append(crawling(href_soup))
+
+    text = " ".join(result)
+    create_word_cloud(text)
 
 
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+<br>
+
+## 3) 더 많은 기사 내용 크롤링하기
+
+```python
+import requests
+from bs4 import BeautifulSoup
 
 
+def crawling(soup):
+    # 기사에서 내용을 추출하고 반환하세요.
+    div = soup.find('div', class_="_article_body_contents")
+
+    result = div.get_text().replace('\n', '').replace('// flash 오류를 우회하기 위한 함수 추가function _flash_removeCallback() {}',
+                                                      '').replace('\t', '')
+
+    return result
 
 
+def get_href(soup,section):
+    # 분야별 기사 페이지에서 최상단의 "주제"에 속한 기사들의 href 링크를 리스트에 담아 반환하세요.
+    result = []
+    if section == "정치":
+        url = soup.find("div",class_="cluster_foot_inner").find("a",class_="cluster_foot_more")['href']
+    else:
+        url = soup.find("div", class_="cluster_head_inner").find("a")['href']
+    req = requests.get("https://news.naver.com"+url)
+    soup = BeautifulSoup(req.text,"html.parser")
+    links = soup.find("div",class_="content").find_all("li")
+    for link in links:
+        result.append(link.find("dt").find("a")['href'])
+
+    return result
+def get_request(section):
+    # 입력된 분야에 맞는 페이지의 URL을 반환합니다.
+    url = "https://news.naver.com/main/main.nhn"
+    section_dict = {"정치": 100,
+                    "경제": 101,
+                    "사회": 102,
+                    "생활": 103,
+                    "세계": 104,
+                    "과학": 105}
+    return requests.get(url, params={"sid1": section_dict[section]})
 
 
+def main():
+    list_href = []
+    result = []
+
+    # 섹션을 입력하세요.
+    section = input('"정치", "경제", "사회", "생활", "세계", "과학" 중 하나를 입력하세요.\n  > ')
+
+    req = get_request(section)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    list_href = get_href(soup,section)
 
 
+    for href in list_href:
+        href_req = requests.get(href)
+        href_soup = BeautifulSoup(href_req.text, "html.parser")
+        result.append(crawling(href_soup))
+    print(result)
 
 
+if __name__ == "__main__":
+    main()
+```
+
+<br>
+<br>
+
+## 4) 더 많은 기사로 워드클라우드 출력하기
+
+- 위 코드에서 형태소 분석, 단어 count, 워드클라우드를 추가했다.
+
+```python
+import requests
+from bs4 import BeautifulSoup
+from collections import Counter
+from string import punctuation
+import mecab
+from wordcloud import WordCloud
+
+mecab = mecab.MeCab()
 
 
+def create_word_cloud(data):
+    counter = count_word_freq(data)
+
+    cloud = WordCloud(font_path='NanumBarunGothic.ttf', background_color='white')
+    cloud.fit_words(counter)
+    cloud.to_file('cloud.png')
 
 
+def count_word_freq(data):
+    _data = data.lower()
+
+    for p in punctuation:
+        _data = _data.replace(p, "")
+
+    # 명사 추출
+    _data = mecab.nouns(_data)
+
+    counter = Counter(_data)
+
+    return counter
 
 
+def crawling(soup):
+    # 기사에서 내용을 추출하고 반환하세요.
+    result = ""
+    for children in soup.find("div", class_="_article_body_contents").children:
+        if children.name == None:
+            result += children
+
+    start = result.find("// TV플레이어")
+    result = result[start + len("// TV플레이어") + 1:]
+
+    end = result.find("// 본문 내용")
+    result = result[:end]
+
+    return result.replace("\n", "").replace("\t", "")
 
 
+def get_href(soup,section):
+    # 분야별 기사 페이지에서 최상단의 "주제"에 속한 기사들의 href 링크를 리스트에 담아 반환하세요.
+    result = []
+    if section == "정치":
+        url = soup.find("div",class_="cluster_foot_inner").find("a",class_="cluster_foot_more")['href']
+    else:
+        url = soup.find("div", class_="cluster_head_inner").find("a")['href']
+    req = requests.get("https://news.naver.com"+url)
+    soup = BeautifulSoup(req.text,"html.parser")
+    links = soup.find("div",class_="content").find_all("li")
+    for link in links:
+        result.append(link.find("dt").find("a")['href'])
+
+    return result
+def get_request(section):
+    # 입력된 분야에 맞는 페이지의 URL을 반환합니다.
+    url = "https://news.naver.com/main/main.nhn"
+    section_dict = {"정치": 100,
+                    "경제": 101,
+                    "사회": 102,
+                    "생활": 103,
+                    "세계": 104,
+                    "과학": 105}
+    return requests.get(url, params={"sid1": section_dict[section]})
+
+
+def main():
+    list_href = []
+    result = []
+
+    # 섹션을 입력하세요.
+    section = input('"정치", "경제", "사회", "생활", "세계", "과학" 중 하나를 입력하세요.\n  > ')
+
+    req = get_request(section)
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    list_href = get_href(soup,section)
+
+
+    for href in list_href:
+        href_req = requests.get(href)
+        href_soup = BeautifulSoup(href_req.text, "html.parser")
+        result.append(crawling(href_soup))
+    text = " ".join(result)
+    create_word_cloud(text)
+
+
+if __name__ == "__main__":
+    main()
+```
 
 
 
