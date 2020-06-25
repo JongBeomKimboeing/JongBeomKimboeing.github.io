@@ -337,9 +337,50 @@ for i in range(0,5):
 
 - Query의 정의: 웹서버에 GET 요청을 보낼 때, 조건에 맞는 정보를 표현하기 위한 변수<br>
 ex) 번호가 1번인 학생을 보여줘라(번호가 변수, 1이 값), <br>
-&#160;전체 기사 중 페이지가 21인 기사들을 보여줘라(페이지가 변수, 21이 값)
+ex) 전체 기사 중 페이지가 21인 기사들을 보여줘라(페이지가 변수, 21이 값) <br>
 
+<br>
 
+ex) https://www.google.com/search?q=elice <br>
+위 예시는 google에 'elice'을 검색한 결과이다. q라는 변수에 elice라는 값이 담겨,<br>
+전체 데이터 중 elice라는 키워드로 검색한 결과만을 보여준다. <br>
+
+<br>
+
+ex) https://movie.naver.com/movie/bi/mi/basic.nhn?code=168058<br>
+네이버 영화 서비스에서 특정 영화를 클릭하면, code라는 변수에 영화 코드가 담겨 해당 영화에 대한 정보를 보여준다.(여기서는 168058) <br>
+
+## 2) request 라이브러리 사용하여 쿼리 지정
+request의 get 메소드로 GET 요청을 보낼 때 params 매개변수에 딕셔너리를 전달함으로서 쿼리를 지정할 수 있다.
+
+```python
+import requests
+url = "https://www.google.com/search"
+result = requests.get(url, params={'q':'elice'})
+```
+### cf) requests.get() 연속으로 하기
+전체 영화 데이터에서 영화 코드에 대한 정보를 크롤링을 이용해서 찾고<br>
+찾은 영화 코드를 다시 request를 이용하여 특정 영화에 대한 정보를 얻는 요청을 할 수 있다.<br>
+이런 경우 requests.get 연산을 두 번 하게 된다.<br>
+
+<br>
+
+ ex)<br>
+ 만약 https://movie.naver.com/movie/bi/mi/basic.nhn?code=168058 에서  <br>
+ 특정 영화에 대한 정보를 얻는 요청을 한다고 할 때<br>
+ 아래와 같이 code에 대한 requests를 한 뒤 한번 더 특정 영화에 대해 requests를 한다.
+```python
+code = ...
+result = requests.get(url, params= {'movie':code})
+```
+
+# 7. 태그와 속성
+HTML에는 여러 종류의 태그와, 태그에 특정 기능이나 유형을 적용하는 속성이 있다.<br>
+
+<br>
+
+ex) <br>
+<div class="elice" id="title">제목</div> <br>
 
 
 
