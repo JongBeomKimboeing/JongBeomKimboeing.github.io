@@ -1515,12 +1515,14 @@ groupby로 묶인 데이터에서 key 값으로 데이터를 가져올 수 있�
 <br>
 <br>
 
-## 12. MultiIndex & pivot_table
+## 12. 
+Index & pivot_table
 
 ### 1) MultiIndex
 - 인덱스를 계층적으로 만들 수 있다.
 
 ```python
+
 df = pd.DataFrame(
     np.random.randn(4,2),
     index=[['A','A','B','B'], [1, 2, 1, 2]],
@@ -1536,7 +1538,9 @@ A 1 -0.652179  0.566551
 B 1  0.276043  1.093460
   2  0.827762 -0.358252
 '''
+
 ```
+
 - 열 인덱스도 계층적으로 만들 수 있다.
 
 ```python
@@ -1559,6 +1563,7 @@ print(df)
 ### 1-1) MultiIndex 인덱싱
 - 인덱스 탐색의 경우에는 loc, iloc를 사용가능하다.
 - column을 가져올 때는 반드시 '[]'를 이용하여 인덱싱을 한다.
+
 ```python
 '''
           A                   B          
