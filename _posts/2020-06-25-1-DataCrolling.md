@@ -3,8 +3,8 @@ layout: post
 title: Data Crolling
 description: "Data Crolling"
 modified: 2020-06-25
-tags: [Data Crolling]
-categories: [Data Crolling]
+tags: [Data Analysis]
+categories: [Data Analysis]
 ---
 
 # 1. 크롤링이란?
