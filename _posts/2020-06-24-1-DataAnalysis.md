@@ -3,8 +3,8 @@ layout: post
 title: 데이터 분석(Numpy)
 description: "데이터 분석(Numpy)"
 modified: 2020-06-24
-tags: [Numpy]
-categories: [Numpy]
+tags: [Data Analysis]
+categories: [Data Analysis]
 ---
 # Numpy
 
