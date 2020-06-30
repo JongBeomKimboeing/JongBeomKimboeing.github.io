@@ -3,8 +3,8 @@ layout: post
 title: 데이터 분석(Matplot)
 description: "데이터 분석(Matplot)"
 modified: 2020-06-24
-tags: [Matplot]
-categories: [Matplot]
+tags: [Data Analysis]
+categories: [Data Analysis]
 ---
 
 # matplotlib
