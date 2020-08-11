@@ -7,7 +7,7 @@ tags: [Kaggle]
 categories: [Kaggle]
 ---
 
-#Kaggle workflow<br>
+# Kaggle workflow<br>
 <br>
 Part1: Exploratory Data Analysis(EDA):<br>
 <br>
