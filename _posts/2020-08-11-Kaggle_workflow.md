@@ -72,7 +72,7 @@ Embarked         2
 dtype: int64
 '''
 
-# 4. 결측값 채우기
+# 4. 결측값 채우기 (아래 데이터 feature 각각을 확인하면서 채워나가는게 좋음)
 
 def train_preprocess(train_raw_data):
     train_raw_data["Cabin"].fillna('N', inplace=True)
