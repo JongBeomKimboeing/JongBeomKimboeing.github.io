@@ -7,8 +7,8 @@ tags: [Kaggle]
 categories: [Kaggle]
 ---
 
-# Kaggle workflow<br>
-<br>
+# Kaggle workflow
+## with titanic
 Part1: Exploratory Data Analysis(EDA):<br>
 <br>
 1)Analysis of the features. (특성과 label 이 어떤 관계를 보이는 지 확인한다.)<br>
